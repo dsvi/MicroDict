@@ -1,0 +1,13 @@
+#pragma once
+
+#include "dictionary.hh"
+
+namespace Gls {
+
+using std::vector;
+using std::string;
+
+vector< sptr< Dictionary::Class > >
+makeDictionaries( const vector< string > & fileNames, const string & indicesDir, Dictionary::Initializing & );
+
+}

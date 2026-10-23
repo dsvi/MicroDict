@@ -1,0 +1,42 @@
+/* This file is (c) 2012 Tvangeste <i.4m.l33t@yandex.ru>
+ * Licensed under GPLv3 or later, see the LICENSE file */
+
+#pragma once
+
+#include <QLabel>
+#include <QString>
+#include <QTimer>
+#include <QShowEvent>
+
+class MainStatusBar: public QWidget
+{
+  Q_OBJECT
+
+public:
+  explicit MainStatusBar( QWidget * parent );
+  QString currentMessage() const;
+
+signals:
+
+public slots:
+  void showMessage( const QString & text, int timeout = 0, const QPixmap & pixmap = QPixmap() );
+  void clearMessage();
+  void setBackgroundMessage( const QString & message );
+
+protected:
+  void mousePressEvent( QMouseEvent * event ) override;
+  void showEvent( QShowEvent * event ) override;
+
+private:
+  void updatePosition();
+
+  QLabel * picWidget;
+
+  QLabel * textWidget;
+
+  QTimer * timer;
+  QString backgroundMessage;
+  QString message;
+
+  bool eventFilter( QObject * obj, QEvent * event ) override;
+};

@@ -1,0 +1,536 @@
+/* This file is (c) 2008-2012 Konstantin Isakov
+ * Licensed under GPLv3 or later, see the LICENSE file */
+
+#include "sounddir.hh"
+#include "folding.hh"
+#include "btreeidx.hh"
+#include "chunkedstorage.hh"
+#include "filetype.hh"
+#include "htmlescape.hh"
+#include "audiolink.hh"
+
+#include "utils.hh"
+
+#include <set>
+#include <QFileInfo>
+#include <QDirIterator>
+#include <QDateTime>
+#include <QDataStream>
+#include <QSet>
+
+namespace SoundDir {
+
+using std::string;
+using std::map;
+using std::multimap;
+using std::set;
+using BtreeIndexing::WordArticleLink;
+using BtreeIndexing::IndexedWords;
+using BtreeIndexing::IndexInfo;
+
+namespace {
+
+enum {
+  Signature            = 0x58524453,
+  CurrentFormatVersion = 2 + BtreeIndexing::FormatVersion + Folding::Version
+};
+
+#pragma pack( push, 1 )
+struct IdxHeader
+{
+  uint32_t signature;
+  uint32_t formatVersion;
+  uint32_t soundsCount;
+  uint32_t chunksOffset;
+  uint32_t dirTimestampsOffset;
+  uint32_t indexBtreeMaxElements;
+  uint32_t indexRootOffset;
+};
+static_assert( alignof( IdxHeader ) == 1 );
+#pragma pack( pop )
+
+bool indexIsOldOrBad( string const & indexFile )
+{
+  File::Index idx( indexFile, QIODevice::ReadOnly );
+
+  IdxHeader header;
+
+  return idx.readRecords( &header, sizeof( header ), 1 ) != 1 || header.signature != Signature
+    || header.formatVersion != CurrentFormatVersion;
+}
+
+class SoundDirDictionary: public BtreeIndexing::BtreeDictionary
+{
+  QMutex idxMutex;
+  File::Index idx;
+  IdxHeader idxHeader;
+  ChunkedStorage::Reader chunks;
+  QString iconFilename;
+
+public:
+
+  SoundDirDictionary( const string & id,
+                      const string & name,
+                      const string & indexFile,
+                      const vector< string > & dictionaryFiles,
+                      const QString & iconFilename_ );
+
+  unsigned long getArticleCount() noexcept override
+  {
+    return idxHeader.soundsCount;
+  }
+
+  unsigned long getWordCount() noexcept override
+  {
+    return getArticleCount();
+  }
+
+  sptr< Dictionary::DataRequest >
+  getArticle( const QString &, const vector< QString > & alts, const QString &, bool ignoreDiacritics ) override;
+
+  sptr< Dictionary::DataRequest > getResource( const string & name ) override;
+
+protected:
+
+  void loadIcon() noexcept override;
+  bool get_file_name( uint32_t articleOffset, QString & file_name );
+};
+
+SoundDirDictionary::SoundDirDictionary( const string & id,
+                                        const string & name_,
+                                        const string & indexFile,
+                                        const vector< string > & dictionaryFiles,
+                                        const QString & iconFilename_ ):
+  BtreeDictionary( id, dictionaryFiles ),
+  idx( indexFile, QIODevice::ReadOnly ),
+  idxHeader( idx.read< IdxHeader >() ),
+  chunks( idx, idxHeader.chunksOffset ),
+  iconFilename( iconFilename_ )
+{
+  dictionaryName = name_;
+
+  openIndex( IndexInfo( idxHeader.indexBtreeMaxElements, idxHeader.indexRootOffset ), idx, idxMutex );
+}
+
+sptr< Dictionary::DataRequest > SoundDirDictionary::getArticle( const QString & word,
+                                                                const vector< QString > & alts,
+                                                                const QString &,
+                                                                bool ignoreDiacritics )
+{
+  vector< WordArticleLink > chain = findArticles( word, ignoreDiacritics );
+
+  for ( const auto & alt : alts ) {
+
+    vector< WordArticleLink > altChain = findArticles( alt, ignoreDiacritics );
+
+    chain.insert( chain.end(), altChain.begin(), altChain.end() );
+  }
+
+  multimap< QString, unsigned > mainArticles, alternateArticles;
+
+  set< uint32_t > articlesIncluded;
+
+  QString wordCaseFolded = Folding::applySimpleCaseOnly( word );
+  if ( ignoreDiacritics ) {
+    wordCaseFolded = Folding::applyDiacriticsOnly( wordCaseFolded );
+  }
+
+  for ( unsigned x = 0; x < chain.size(); ++x ) {
+    if ( articlesIncluded.find( chain[ x ].articleOffset ) != articlesIncluded.end() ) {
+      continue;
+    }
+
+    QString headwordStripped = Folding::applySimpleCaseOnly( chain[ x ].word );
+    if ( ignoreDiacritics ) {
+      headwordStripped = Folding::applyDiacriticsOnly( headwordStripped );
+    }
+
+    multimap< QString, unsigned > & mapToUse =
+      ( wordCaseFolded == headwordStripped ) ? mainArticles : alternateArticles;
+
+    mapToUse.insert( std::pair( Folding::applySimpleCaseOnly( chain[ x ].word ), x ) );
+
+    articlesIncluded.insert( chain[ x ].articleOffset );
+  }
+
+  if ( mainArticles.empty() && alternateArticles.empty() ) {
+    return std::make_shared< Dictionary::DataRequestInstant >( false );
+  }
+
+  string result;
+
+  multimap< QString, uint32_t >::const_iterator i;
+
+  string displayedName;
+  vector< char > chunk;
+  char * nameBlock;
+
+  result += "<div class=\"audio-play\">";
+
+  for ( i = mainArticles.begin(); i != mainArticles.end(); ++i ) {
+    uint32_t address = chain[ i->second ].articleOffset;
+
+    if ( mainArticles.size() + alternateArticles.size() <= 1 ) {
+      displayedName = chain[ i->second ].word;
+    }
+    else {
+      try {
+        QMutexLocker _( &idxMutex );
+        nameBlock = chunks.getBlock( address, chunk );
+
+        if ( nameBlock >= &chunk.front() + chunk.size() ) {
+          throw ChunkedStorage::exAddressOutOfRange();
+        }
+
+        chunk.back()  = 0;
+        displayedName = string( nameBlock );
+      }
+      catch ( ChunkedStorage::exAddressOutOfRange & ) {
+        continue;
+      }
+    }
+
+    result += "<div class=\"audio-play-item\">";
+    auto _displayName = Html::escape( displayedName );
+    QString file_name;
+    if ( !get_file_name( address, file_name ) ) {
+      file_name = QString::fromStdString( _displayName );
+    }
+    QUrl url;
+    url.setScheme( "gdau" );
+    url.setHost( QString::fromUtf8( getId().c_str() ) );
+    auto path = Utils::Url::ensureLeadingSlash( QString( "%1/%2" ).arg( QString::number( address ), file_name ) );
+    url.setPath( path );
+
+    string ref = string( "\"" ) + url.toEncoded().data() + "\"";
+
+    result += addAudioLink( url.toEncoded(), getId() );
+
+    result += "<a href=" + ref + R"( class="audio-play-icon"></a>)";
+    result += "<a href=" + ref + ">" + _displayName + "</a>";
+    result += "</div>";
+  }
+
+  for ( i = alternateArticles.begin(); i != alternateArticles.end(); ++i ) {
+    uint32_t address = chain[ i->second ].articleOffset;
+
+    if ( mainArticles.size() + alternateArticles.size() <= 1 ) {
+      displayedName = chain[ i->second ].word;
+    }
+    else {
+      try {
+        QMutexLocker _( &idxMutex );
+        nameBlock = chunks.getBlock( address, chunk );
+
+        if ( nameBlock >= &chunk.front() + chunk.size() ) {
+          throw ChunkedStorage::exAddressOutOfRange();
+        }
+
+        chunk.back()  = 0;
+        displayedName = string( nameBlock );
+      }
+      catch ( ChunkedStorage::exAddressOutOfRange & ) {
+        continue;
+      }
+    }
+
+    result += "<div class=\"audio-play-item\">";
+    auto _displayName = Html::escape( displayedName );
+    QString file_name;
+    if ( !get_file_name( address, file_name ) ) {
+      file_name = QString::fromStdString( _displayName );
+    }
+    QUrl url;
+    url.setScheme( "gdau" );
+    url.setHost( QString::fromUtf8( getId().c_str() ) );
+    auto path = Utils::Url::ensureLeadingSlash( QString( "%1/%2" ).arg( QString::number( address ), file_name ) );
+    url.setPath( path );
+
+    string ref = string( "\"" ) + url.toEncoded().data() + "\"";
+
+    addAudioLink( url.toEncoded(), getId() );
+
+    result += "<a href=" + ref + R"( class="audio-play-icon"></a>)";
+    result += "<a href=" + ref + ">" + _displayName + "</a>";
+    result += "</div>";
+  }
+
+  result += "</div>";
+
+  auto ret = std::make_shared< Dictionary::DataRequestInstant >( true );
+
+  ret->appendString( result );
+
+  return ret;
+}
+
+void SoundDirDictionary::loadIcon() noexcept
+{
+  if ( dictionaryIconLoaded ) {
+    return;
+  }
+
+  if ( !iconFilename.isEmpty() ) {
+    const QFileInfo fInfo( QDir( Config::getConfigDir() ), iconFilename );
+    if ( fInfo.isFile() ) {
+      loadIconFromFilePath( fInfo.absoluteFilePath() );
+    }
+  }
+  if ( dictionaryIcon.isNull() ) {
+    dictionaryIcon = QIcon( ":/icons/sounddir.svg" );
+  }
+  dictionaryIconLoaded = true;
+}
+
+bool SoundDirDictionary::get_file_name( uint32_t articleOffset, QString & file_name )
+{
+  vector< char > chunk;
+  char * articleData;
+
+  try {
+    QMutexLocker _( &idxMutex );
+
+    articleData = chunks.getBlock( articleOffset, chunk );
+
+    if ( articleData >= &chunk.front() + chunk.size() ) {
+      throw ChunkedStorage::exAddressOutOfRange();
+    }
+  }
+  catch ( ChunkedStorage::exAddressOutOfRange & ) {
+    return false;
+  }
+
+  chunk.back() = 0;
+  file_name    = QString::fromUtf8( articleData );
+  return true;
+}
+
+sptr< Dictionary::DataRequest > SoundDirDictionary::getResource( const string & name )
+
+{
+  bool isNumber = false;
+  uint32_t articleOffset;
+
+  const auto _name       = QString::fromStdString( name );
+  const qint64 sep_index = _name.indexOf( '/' );
+  if ( sep_index > 0 ) {
+    const auto number = _name.left( sep_index );
+    articleOffset     = number.toULong( &isNumber );
+  }
+  else {
+    articleOffset = QString::fromUtf8( name.c_str() ).toULong( &isNumber );
+  }
+
+
+  if ( !isNumber ) {
+    return std::make_shared< Dictionary::DataRequestInstant >( false );
+  }
+
+  QString file_name;
+  if ( !get_file_name( articleOffset, file_name ) ) {
+    return std::make_shared< Dictionary::DataRequestInstant >( false );
+  }
+
+  const QDir dir( QDir::fromNativeSeparators( getDictionaryFilenames()[ 0 ].c_str() ) );
+
+  const QString fileName = QDir::toNativeSeparators( dir.filePath( file_name ) );
+
+  try {
+    File::Index f( fileName.toStdString(), QIODevice::ReadOnly );
+
+    sptr< Dictionary::DataRequestInstant > dr = std::make_shared< Dictionary::DataRequestInstant >( true );
+
+    vector< char > & data = dr->getData();
+
+    f.seekEnd();
+
+    data.resize( f.tell() );
+
+    f.rewind();
+    f.read( &data.front(), data.size() );
+
+    return dr;
+  }
+  catch ( File::Ex & ) {
+    return std::make_shared< Dictionary::DataRequestInstant >( false );
+  }
+}
+
+void addDir( const QDir & dir, IndexedWords & indexedWords, uint32_t & soundsCount, ChunkedStorage::Writer & chunks )
+{
+  QDirIterator it( dir.path(), QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories );
+
+  while ( it.hasNext() ) {
+    it.next();
+    const QFileInfo & fileInfo = it.fileInfo();
+
+    if ( Filetype::isNameOfSound( fileInfo.fileName().toUtf8().data() ) ) {
+      string fileName = dir.relativeFilePath( fileInfo.filePath() ).toUtf8().data();
+
+      const uint32_t articleOffset = chunks.startNewBlock();
+      chunks.addToBlock( fileName.c_str(), fileName.size() + 1 );
+
+      QString name = fileInfo.fileName();
+
+      const qsizetype pos = name.lastIndexOf( u'.' );
+
+      if ( pos >= 0 ) {
+        name.truncate( pos );
+      }
+
+      indexedWords.addWord( name, articleOffset );
+
+      ++soundsCount;
+    }
+  }
+}
+
+}
+
+vector< sptr< Dictionary::Class > > makeDictionaries( const Config::SoundDirs & soundDirs,
+                                                      const string & indicesDir,
+                                                      Dictionary::Initializing & initializing )
+
+{
+  vector< sptr< Dictionary::Class > > dictionaries;
+
+  for ( const auto & soundDir : soundDirs ) {
+    QDir dir( soundDir.path );
+
+    if ( !dir.exists() ) {
+      continue;
+    }
+
+    vector< string > dictFiles( 1, QDir::toNativeSeparators( dir.canonicalPath() ).toStdString() );
+
+    dictFiles.push_back( "SoundDir" );
+
+    string dictId = Dictionary::makeDictionaryId( dictFiles );
+
+    dictFiles.pop_back();
+
+    string indexFile = indicesDir + dictId;
+
+    bool rebuildNeeded;
+
+    if ( Dictionary::needToRebuildIndex( dictFiles, indexFile ) || indexIsOldOrBad( indexFile ) ) {
+      rebuildNeeded = true;
+    }
+    else {
+      rebuildNeeded = false;
+      try {
+        File::Index idx( indexFile, QIODevice::ReadOnly );
+        IdxHeader header = idx.read< IdxHeader >();
+        idx.seek( header.dirTimestampsOffset );
+
+        vector< char > data;
+        data.resize( idx.size() - header.dirTimestampsOffset );
+        idx.read( &data.front(), data.size() );
+        QByteArray timestampData = QByteArray::fromRawData( data.data(), data.size() );
+        QDataStream stream( &timestampData, QIODevice::ReadOnly );
+
+        QMap< QString, QDateTime > storedTimestamps;
+        stream >> storedTimestamps;
+
+        QSet< QString > onDiskDirs;
+
+        QFileInfo rootInfo( dir.path() );
+        QString rootRelPath = ".";
+        onDiskDirs.insert( rootRelPath );
+        if ( !storedTimestamps.contains( rootRelPath )
+             || storedTimestamps.value( rootRelPath ) != rootInfo.lastModified() ) {
+          rebuildNeeded = true;
+        }
+
+        if ( !rebuildNeeded ) {
+          QDirIterator it( dir.path(),
+                           QDir::AllDirs | QDir::NoDotAndDotDot | QDir::NoSymLinks,
+                           QDirIterator::Subdirectories );
+          while ( it.hasNext() ) {
+            it.next();
+            QString relPath = dir.relativeFilePath( it.filePath() );
+            onDiskDirs.insert( relPath );
+            if ( !storedTimestamps.contains( relPath )
+                 || storedTimestamps.value( relPath ) != it.fileInfo().lastModified() ) {
+              rebuildNeeded = true;
+              break;
+            }
+          }
+        }
+
+        if ( !rebuildNeeded && onDiskDirs.size() != storedTimestamps.size() ) {
+          rebuildNeeded = true;
+        }
+      }
+      catch ( std::exception & e ) {
+        qWarning( "Could not verify sounddir index for %s, forcing rebuild. Error: %s",
+                  soundDir.path.toUtf8().constData(),
+                  e.what() );
+        rebuildNeeded = true;
+      }
+    }
+
+    if ( rebuildNeeded ) {
+
+      qDebug() << "Sounds: Building the index for directory: " << soundDir.path;
+
+      initializing.indexingDictionary( soundDir.name.toUtf8().data() );
+
+      File::Index idx( indexFile, QIODevice::WriteOnly );
+
+      IdxHeader idxHeader = {};
+
+      idx.write( idxHeader );
+
+      IndexedWords indexedWords;
+
+      ChunkedStorage::Writer chunks( idx );
+
+      uint32_t soundsCount = 0;
+
+      addDir( dir, indexedWords, soundsCount, chunks );
+
+      idxHeader.soundsCount = soundsCount;
+
+      idxHeader.chunksOffset = chunks.finish();
+
+      IndexInfo idxInfo = BtreeIndexing::buildIndex( indexedWords, idx );
+
+      idxHeader.indexBtreeMaxElements = idxInfo.btreeMaxElements;
+      idxHeader.indexRootOffset       = idxInfo.rootOffset;
+
+      idxHeader.dirTimestampsOffset = idx.tell();
+      QMap< QString, QDateTime > dirTimestamps;
+      QDirIterator it( dir.path(),
+                       QDir::AllDirs | QDir::NoDotAndDotDot | QDir::NoSymLinks,
+                       QDirIterator::Subdirectories );
+      while ( it.hasNext() ) {
+        it.next();
+        dirTimestamps.insert( dir.relativeFilePath( it.filePath() ), it.fileInfo().lastModified() );
+      }
+      dirTimestamps.insert( QString( "." ), QFileInfo( dir.path() ).lastModified() );
+
+      QByteArray timestampData;
+      QDataStream stream( &timestampData, QIODevice::WriteOnly );
+      stream << dirTimestamps;
+      idx.write( timestampData.constData(), timestampData.size() );
+
+      idxHeader.signature     = Signature;
+      idxHeader.formatVersion = CurrentFormatVersion;
+
+      idx.rewind();
+
+      idx.write( &idxHeader, sizeof( idxHeader ) );
+    }
+
+    dictionaries.push_back( std::make_shared< SoundDirDictionary >( dictId,
+                                                                    soundDir.name.toUtf8().data(),
+                                                                    indexFile,
+                                                                    dictFiles,
+                                                                    soundDir.iconFilename ) );
+  }
+
+  return dictionaries;
+}
+
+}

@@ -1,0 +1,73 @@
+site_name: MicroDict
+site_url: https://dsvi.github.io/MicroDict/
+repo_url: https://github.com/dsvi/MicroDict
+edit_uri: edit/main/website/docs/
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.action.edit
+    - content.code.copy
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+nav:
+  - index.md
+  - Install: install.md
+  - User Guide:
+    - Toolbar: ui_toolbar.md
+    - Favorites: ui_favorites.md
+    - Headwords dialog: ui_headwords.md
+    - Full-text search: ui_fulltextsearch.md
+    - Article rendering: article_rendering.md
+    - Audio engine: ui_audioengine.md
+    - Keyboard shortcuts: ui_shortcuts.md
+    - Command line: cli.md
+    - Managing dictionary sources: manage_sources.md
+    - Managing groups: manage_groups.md
+    - Dictionary formats: dictformats.md
+  - Topics:
+    - Custom dictionary: custom_dictionary.md
+    - Appearance: topic_userstyle.md
+    - Transliteration: topic_transliteration.md
+    - Wayland: topic_wayland.md
+    - Configuration folders: topic_config_folders.md
+    - Moving the index folder: topic_move_index_folder.md
+    - Portable mode: topic_portablemode.md
+  - How to:
+    - Build from source: howto/build_from_source.md
+    - Build the static Linux binary: howto/build_static_linux.md
+    - Add a program as a dictionary: howto/how to add a program as dictionary.md
+    - Manually reindex a dictionary: howto/how to manually reindex dictionary.md
+    - Customize OpenCC: howto/how to customize the opencc.md
+    - Update the Crowdin .ts file: howto/how to update crowdin.ts file.md
+    - OCR: howto/ocr.md
+  - developer.md
+  - architecture.md
+  - feedbacks.md

@@ -1,0 +1,278 @@
+/* This file is (c) 2008-2012 Konstantin Isakov
+ * Licensed under GPLv3 or later, see the LICENSE file */
+
+#include "loaddictionaries.hh"
+#include "initializing.hh"
+#include "dict/bgl.hh"
+#include "dict/stardict.hh"
+#include "dict/lsa.hh"
+#include "dict/dsl.hh"
+#include "dict/sounddir.hh"
+#include "dict/hunspell.hh"
+#include "dictdfiles.hh"
+#include "dict/programs.hh"
+#include "dict/xdxf.hh"
+#include "dict/sdict.hh"
+#include "dict/aard.hh"
+#include "dict/zipsounds.hh"
+#include "dict/mdx.hh"
+#include "dict/slob.hh"
+#include "dict/gls.hh"
+#include "metadata.hh"
+#include "common/globalbroadcaster.hh"
+
+#include "dict/transliteration/belarusian.hh"
+#include "dict/transliteration/custom.hh"
+#include "dict/transliteration/german.hh"
+#include "dict/transliteration/greek.hh"
+#include "dict/transliteration/romaji.hh"
+#include "dict/transliteration/russian.hh"
+
+
+#ifdef MAKE_CHINESE_CONVERSION_SUPPORT
+  #include "dict/transliteration/chinese.hh"
+#endif
+
+#include <QThreadPool>
+#include <QMessageBox>
+#include <QDir>
+#include <QString>
+
+#include <set>
+
+using std::set;
+
+using std::string;
+using std::vector;
+
+LoadDictionaries::LoadDictionaries( const Config::Class & cfg ):
+  paths( cfg.paths ),
+  soundDirs( cfg.soundDirs ),
+  hunspell( cfg.hunspell ),
+  transliteration( cfg.transliteration ),
+  maxHeadwordSize( cfg.maxHeadwordSize ),
+  maxHeadwordToExpand( cfg.maxHeadwordsToExpand )
+{
+
+  nameFilters << "*.bgl"
+              << "*.ifo"
+              << "*.lsa"
+              << "*.dat"
+              << "*.dsl"
+              << "*.dsl.dz"
+              << "*.index"
+              << "*.xdxf"
+              << "*.xdxf.dz"
+              << "*.dct"
+              << "*.aar"
+              << "*.zips"
+              << "*.mdx"
+              << "*.gls"
+              << "*.gls.dz"
+              << "*.slob"
+              ;
+}
+
+void LoadDictionaries::load()
+{
+  try {
+    for ( const auto & path : paths ) {
+      qDebug() << "handle path:" << path.path;
+      try {
+        handlePath( path );
+      }
+      catch ( const std::exception & e ) {
+        qWarning() << "Error handling path:" << path.path << "-" << e.what();
+        auto exception = "[" + path.path.toStdString() + "]:" + e.what();
+        exceptionTexts << QString::fromUtf8( exception );
+      }
+    }
+
+    {
+      vector< sptr< Dictionary::Class > > soundDirDictionaries =
+        SoundDir::makeDictionaries( soundDirs, Config::getIndexDir().toStdString(), *this );
+
+      dictionaries.insert( dictionaries.end(), soundDirDictionaries.begin(), soundDirDictionaries.end() );
+    }
+
+    {
+      vector< sptr< Dictionary::Class > > hunspellDictionaries = HunspellMorpho::makeDictionaries( hunspell );
+
+      dictionaries.insert( dictionaries.end(), hunspellDictionaries.begin(), hunspellDictionaries.end() );
+    }
+
+    for ( const auto & dict : dictionaries ) {
+      auto baseDir = dict->getContainingFolder();
+      if ( baseDir.isEmpty() ) {
+        continue;
+      }
+
+      auto filePath = Utils::Path::combine( baseDir, "metadata.toml" );
+
+      auto dictMetaData = Metadata::load( filePath.toStdString() );
+      if ( dictMetaData && dictMetaData->name ) {
+        dict->setName( dictMetaData->name.value() );
+      }
+      if ( dictMetaData && dictMetaData->fullindex ) {
+        dict->setFtsEnabled( dictMetaData->fullindex.value() );
+      }
+    }
+
+    Config::Class * cfg = GlobalBroadcaster::instance()->getConfig();
+
+    if ( cfg && cfg->dirty ) {
+      Config::save( *cfg );
+    }
+  }
+  catch ( std::exception & e ) {
+    exceptionTexts << QString::fromUtf8( e.what() );
+  }
+
+  emit finished();
+}
+
+void LoadDictionaries::addDicts( const std::vector< sptr< Dictionary::Class > > & dicts )
+{
+  std::move( dicts.begin(), dicts.end(), std::back_inserter( dictionaries ) );
+}
+
+void LoadDictionaries::handlePath( const Config::Path & path )
+{
+  vector< string > allFiles;
+
+  QDir dir( path.path );
+
+  QFileInfoList entries = dir.entryInfoList( nameFilters, QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot );
+
+  for ( QFileInfoList::const_iterator i = entries.constBegin(); i != entries.constEnd(); ++i ) {
+    QString fullName = i->absoluteFilePath();
+
+    if ( path.recursive && i->isDir() ) {
+      if ( !fullName.endsWith( ".dsl.files", Qt::CaseInsensitive )
+           && !fullName.endsWith( ".dsl.dz.files", Qt::CaseInsensitive ) ) {
+        handlePath( Config::Path( fullName, true ) );
+      }
+    }
+
+    if ( !i->isDir() ) {
+      allFiles.push_back( QDir::toNativeSeparators( fullName ).toStdString() );
+    }
+  }
+
+  auto indexDir = Config::getIndexDir().toStdString();
+  addDicts( Bgl::makeDictionaries( allFiles, indexDir, *this ) );
+  addDicts( Stardict::makeDictionaries( allFiles, indexDir, *this, maxHeadwordToExpand ) );
+  addDicts( Lsa::makeDictionaries( allFiles, indexDir, *this ) );
+  addDicts( Dsl::makeDictionaries( allFiles, indexDir, *this, maxHeadwordSize ) );
+  addDicts( DictdFiles::makeDictionaries( allFiles, indexDir, *this ) );
+  addDicts( Xdxf::makeDictionaries( allFiles, indexDir, *this ) );
+  addDicts( Sdict::makeDictionaries( allFiles, indexDir, *this ) );
+  addDicts( Aard::makeDictionaries( allFiles, indexDir, *this, maxHeadwordToExpand ) );
+  addDicts( ZipSounds::makeDictionaries( allFiles, indexDir, *this ) );
+  addDicts( Mdx::makeDictionaries( allFiles, indexDir, *this ) );
+  addDicts( Gls::makeDictionaries( allFiles, indexDir, *this ) );
+  addDicts( Slob::makeDictionaries( allFiles, indexDir, *this, maxHeadwordToExpand ) );
+}
+
+void LoadDictionaries::indexingDictionary( const string & dictionaryName ) noexcept
+{
+  emit indexingDictionarySignal( QString::fromUtf8( dictionaryName.c_str() ) );
+}
+
+void LoadDictionaries::loadingDictionary( const string & dictionaryName ) noexcept
+{
+  emit loadingDictionarySignal( QString::fromUtf8( dictionaryName.c_str() ) );
+}
+
+
+void loadDictionaries( QWidget * parent,
+                       const Config::Class & cfg,
+                       std::vector< sptr< Dictionary::Class > > & dictionaries,
+                       bool doDeferredInit_ )
+{
+  GlobalBroadcaster::instance()->clearDictMap();
+  dictionaries.clear();
+
+  bool showSplashWindow = !cfg.preferences.enableTrayIcon || !cfg.preferences.startToTray;
+  ::Initializing init( nullptr, showSplashWindow );
+
+  LoadDictionaries loadDicts( cfg );
+
+  QObject::connect( &loadDicts, &LoadDictionaries::indexingDictionarySignal, &init, &Initializing::indexing );
+  QObject::connect( &loadDicts, &LoadDictionaries::loadingDictionarySignal, &init, &Initializing::loading );
+  QEventLoop localLoop;
+
+  QObject::connect( &loadDicts, &LoadDictionaries::finished, &localLoop, &QEventLoop::quit );
+
+  QThreadPool::globalInstance()->start( [ &loadDicts ]() {
+    loadDicts.load();
+  } );
+
+  localLoop.exec();
+
+  if ( loadDicts.getExceptionText().size() ) {
+    QMessageBox::critical( parent,
+                           QCoreApplication::translate( "LoadDictionaries", "Error loading dictionaries" ),
+                           QString::fromUtf8( loadDicts.getExceptionText().c_str() ) );
+  }
+
+  dictionaries = loadDicts.getDictionaries();
+
+  auto static addDicts = [ &dictionaries ]( const vector< sptr< Dictionary::Class > > & dicts ) {
+    std::move( dicts.begin(), dicts.end(), std::back_inserter( dictionaries ) );
+  };
+
+#ifdef MAKE_CHINESE_CONVERSION_SUPPORT
+  addDicts( ChineseTranslit::makeDictionaries( cfg.transliteration.chinese ) );
+#endif
+
+  addDicts( RomajiTranslit::makeDictionaries( cfg.transliteration.romaji ) );
+  addDicts( CustomTranslit::makeDictionaries( cfg.transliteration.customTrans ) );
+
+  if ( cfg.transliteration.enableRussianTransliteration ) {
+    dictionaries.push_back( RussianTranslit::makeDictionary() );
+  }
+
+  if ( cfg.transliteration.enableGermanTransliteration ) {
+    dictionaries.push_back( GermanTranslit::makeDictionary() );
+  }
+
+  if ( cfg.transliteration.enableGreekTransliteration ) {
+    dictionaries.push_back( GreekTranslit::makeDictionary() );
+  }
+
+  if ( cfg.transliteration.enableBelarusianTransliteration ) {
+    addDicts( BelarusianTranslit::makeDictionaries() );
+  }
+
+  addDicts( Programs::makeDictionaries( cfg.programs ) );
+
+
+  qDebug( "Load done" );
+
+  set< string > ids;
+  std::pair< std::set< string >::iterator, bool > ret;
+
+  for ( unsigned x = dictionaries.size(); x--; ) {
+    ret = ids.insert( dictionaries[ x ]->getId() );
+    if ( !ret.second ) {
+      qWarning( R"(Duplicate dictionary ID found: ID=%s, name="%s", path="%s")",
+                dictionaries[ x ]->getId().c_str(),
+                dictionaries[ x ]->getName().c_str(),
+                dictionaries[ x ]->getDictionaryFilenames().empty() ?
+                  "" :
+                  dictionaries[ x ]->getDictionaryFilenames()[ 0 ].c_str() );
+    }
+  }
+
+  if ( doDeferredInit_ ) {
+    doDeferredInit( dictionaries );
+  }
+}
+
+void doDeferredInit( std::vector< sptr< Dictionary::Class > > & dictionaries )
+{
+  for ( const auto & dictionarie : dictionaries ) {
+    dictionarie->deferredInit();
+  }
+}

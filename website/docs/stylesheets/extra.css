@@ -1,0 +1,8 @@
+/* The screenshots in the docs are light-mode captures, so on a dark page they need
+   an outline. Keyed to the scheme actually rendered (the body attribute Material
+   sets), not to prefers-color-scheme: a reader whose OS is dark but who picked
+   light mode in the toggle must not get a white outline on a white page. */
+[data-md-color-scheme="slate"] .md-content img {
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.14);
+  border-radius: 4px;
+}

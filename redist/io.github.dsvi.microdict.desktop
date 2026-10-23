@@ -1,0 +1,18 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Categories=Office;Dictionary;
+Name=MicroDict
+GenericName=Multiformat Dictionary
+GenericName[ru]=Многоформатный словарь
+GenericName[zh_CN]=多格式字典
+Comment=A feature-rich dictionary lookup program
+Comment[ru]=Словарь
+Comment[zh_CN]=多功能字典查询软件
+Keywords=dict;dictionary;
+Keywords[ru]=dict;dictionary;словарь;
+Keywords[zh_CN]=dict;dictionary;字典;
+Icon=microdict
+Exec=microdict %u
+MimeType=x-scheme-handler/microdict;x-scheme-handler/dict;
+StartupWMClass=microdict

@@ -1,0 +1,22 @@
+/* This file is (c) 2008-2012 Konstantin Isakov
+ * Licensed under GPLv3 or later, see the LICENSE file */
+
+#include "about.hh"
+#include "version.hh"
+
+#include <QClipboard>
+#include <QPushButton>
+
+About::About( QWidget * parent ):
+  QDialog( parent )
+{
+  ui.setupUi( this );
+
+  ui.versionInfo->setText( Version::everything() );
+
+  ui.changelogLink->setText( QStringLiteral( "<a href=\"%1\">Changelog</a>" ).arg( Version::getReleaseUrl() ) );
+
+  connect( ui.copyInfoBtn, &QPushButton::clicked, this, [] {
+    QGuiApplication::clipboard()->setText( Version::everything() );
+  } );
+}

@@ -1,0 +1,56 @@
+#pragma once
+
+#include <QSortFilterProxyModel>
+#include <qprogressdialog.h>
+
+#include "config.hh"
+#include "ui_dictheadwords.h"
+#include "dict/dictionary.hh"
+#include "delegate.hh"
+#include "headwordsmodel.hh"
+
+class DictHeadwords: public QDialog
+{
+  Q_OBJECT
+
+public:
+  explicit DictHeadwords( QWidget * parent, Config::Class & cfg_, Dictionary::Class * dict_ );
+  virtual ~DictHeadwords();
+
+  void setup( Dictionary::Class * dict_ );
+
+protected:
+  Config::Class & cfg;
+  Dictionary::Class * dict;
+
+  std::shared_ptr< HeadwordListModel > model;
+  QSortFilterProxyModel * proxy;
+  WordListItemDelegate * delegate;
+  QString dictId;
+
+  void saveHeadersToFile();
+  bool eventFilter( QObject * obj, QEvent * ev );
+
+private:
+  Ui::DictHeadwords ui;
+  QMutex mutex;
+  static void writeWordToFile( QTextStream & out, const QString & word );
+
+private slots:
+  void savePos();
+  void filterChangedInternal();
+  QRegularExpression getFilterRegex() const;
+  void filterChanged();
+  void exportButtonClicked();
+  void okButtonClicked();
+  void itemClicked( const QModelIndex & index );
+  void autoApplyStateChanged( int state );
+  void showHeadwordsNumber();
+  void exportAllWords( QProgressDialog & progress, QTextStream & out );
+  void loadRegex( QProgressDialog & progress, QTextStream & out );
+  virtual void reject();
+
+signals:
+  void headwordSelected( const QString &, const QString & );
+  void closeDialog();
+};

@@ -1,0 +1,94 @@
+#pragma once
+
+#include "config.hh"
+#include "pronounceengine.hh"
+#include "dict/dictionary.hh"
+#include "dictionary_icon_name.hh"
+#include "sptr.hh"
+#include <QMap>
+#include <QDateTime>
+#include <atomic>
+#include <vector>
+#include "instances.hh"
+#include "audio/audioplayerinterface.hh"
+
+struct ActiveDictIds
+{
+  unsigned groupId;
+  QString word;
+  QStringList dictIds;
+
+  operator QString() const
+  {
+    return QString( "groupId:%1,word:%2,dictId:%3" ).arg( QString::number( groupId ), word, dictIds.join( "," ) );
+  }
+};
+
+
+class GlobalBroadcaster: public QObject
+{
+  Q_OBJECT
+
+  Config::Class * config = nullptr;
+  const AudioPlayerPtr * audioPlayer                         = nullptr;
+  std::vector< sptr< Dictionary::Class > > * allDictionaries = nullptr;
+  Instances::Groups * groups                                 = nullptr;
+  QSet< QString > hostWhitelist;
+  QSet< QString > refererWhitelist;
+  Icons::DictionaryIconName _icon_names;
+  QMap< QString, QString > lsaIdToPathMap;
+  QMap< QString, QString > lsaPathToIdMap;
+  QMap< QString, sptr< Dictionary::Class > > dictMap;
+  void loadWhitelist();
+
+
+public:
+
+  void setConfig( Config::Class * _config );
+  Config::Class * getConfig() const;
+  void setAudioPlayer( const AudioPlayerPtr * _audioPlayer );
+  const AudioPlayerPtr * getAudioPlayer() const;
+  void setAllDictionaries( std::vector< sptr< Dictionary::Class > > * _allDictionaries );
+  const std::vector< sptr< Dictionary::Class > > * getAllDictionaries() const;
+  sptr< Dictionary::Class > getDictionaryById( const QString & dictId );
+  void clearDictMap();
+  void setGroups( Instances::Groups * _groups );
+  const Instances::Groups * getGroups() const;
+  void addLsaDictMapping( const QString & dictId, const QString & path );
+  QString getLsaPathFromId( const QString & dictId ) const;
+  QString getLsaIdFromPath( const QString & path ) const;
+  Config::Preferences * getPreference() const;
+  GlobalBroadcaster( QObject * parent = nullptr );
+  void addHostWhitelist( QString host );
+  void addRefererWhitelist( QString host );
+
+  bool existedInHostWhitelist( QString host ) const;
+  bool existedInRefererWhitelist( QString host ) const;
+  static GlobalBroadcaster * instance();
+  unsigned currentGroupId;
+  QString translateLineText{};
+  QSet< QString > collapsedDicts;
+
+  std::function< bool( const QString & ) > isWordPresentedInFavorites;
+
+  PronounceEngine pronounce_engine;
+  QString getAbbrName( const QString & text, const QString & key = {} );
+
+  bool isDarkReaderModeEnabled() const;
+
+  static bool isSystemDarkTheme();
+
+signals:
+  void dictionaryChanges( ActiveDictIds ad );
+  void dictionaryClear( ActiveDictIds ad );
+
+  void indexingDictionary( QString );
+
+
+  void ftsStateChanged();
+
+  void stopFtsIndexing();
+  void startFtsIndexing();
+
+  void mutedDictionariesChanged();
+};

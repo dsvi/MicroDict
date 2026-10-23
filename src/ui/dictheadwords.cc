@@ -1,0 +1,386 @@
+/* This file is (c) 2014 Abs62
+ * Licensed under GPLv3 or later, see the LICENSE file */
+
+#include "dictheadwords.hh"
+#include "headwordsmodel.hh"
+#include <QFileDialog>
+#include <QTimer>
+#include <QProgressDialog>
+
+#include <QRegularExpression>
+#include "wildcard.hh"
+#include "help.hh"
+#include <QMessageBox>
+#include <QMutexLocker>
+#include <memory>
+
+
+enum SearchType {
+  FixedString,
+  Wildcard,
+  Regex
+};
+DictHeadwords::DictHeadwords( QWidget * parent, Config::Class & cfg_, Dictionary::Class * dict_ ):
+  QDialog( parent ),
+  cfg( cfg_ ),
+  dict( dict_ )
+{
+  ui.setupUi( this );
+
+  const bool fromMainWindow = parent->objectName() == "MainWindow";
+
+  if ( fromMainWindow ) {
+    setAttribute( Qt::WA_DeleteOnClose, false );
+  }
+
+  setWindowFlags( windowFlags() & ~Qt::WindowContextHelpButtonHint );
+
+  if ( cfg.headwordsDialog.headwordsDialogGeometry.size() > 0 ) {
+    restoreGeometry( cfg.headwordsDialog.headwordsDialogGeometry );
+  }
+
+  ui.searchModeCombo->addItem( tr( "Text" ), SearchType::FixedString );
+  ui.searchModeCombo->addItem( tr( "Wildcards" ), SearchType::Wildcard );
+  ui.searchModeCombo->addItem( tr( "Regular Expression" ), SearchType::Regex );
+  ui.searchModeCombo->setCurrentIndex( cfg.headwordsDialog.searchMode );
+
+  ui.exportButton->setAutoDefault( false );
+  ui.applyButton->setAutoDefault( true );
+  ui.applyButton->setDefault( true );
+
+  ui.matchCase->setChecked( cfg.headwordsDialog.matchCase );
+
+  model = std::make_shared< HeadwordListModel >();
+  model->setMaxFilterResults( ui.filterMaxResult->value() );
+  proxy = new QSortFilterProxyModel( this );
+
+  proxy->setSourceModel( model.get() );
+
+  proxy->setSortCaseSensitivity( Qt::CaseInsensitive );
+  proxy->setSortLocaleAware( true );
+  proxy->setDynamicSortFilter( false );
+
+  ui.headersListView->setModel( proxy );
+  ui.headersListView->setEditTriggers( QAbstractItemView::NoEditTriggers );
+
+  ui.headersListView->setUniformItemSizes( true );
+
+  delegate = new WordListItemDelegate( ui.headersListView->itemDelegate() );
+  if ( delegate ) {
+    ui.headersListView->setItemDelegate( delegate );
+  }
+
+  ui.autoApply->setChecked( cfg.headwordsDialog.autoApply );
+
+  bool exceedLimit = model->totalCount() > HEADWORDS_MAX_LIMIT;
+  ui.filterMaxResult->setEnabled( exceedLimit );
+
+  connect( this, &QDialog::finished, this, &DictHeadwords::savePos );
+
+  if ( !fromMainWindow ) {
+    connect( this, &DictHeadwords::closeDialog, this, &QDialog::accept );
+  }
+  else {
+  }
+
+  connect( ui.exportButton, &QAbstractButton::clicked, this, &DictHeadwords::exportButtonClicked );
+  connect( ui.applyButton, &QAbstractButton::clicked, this, &DictHeadwords::filterChanged );
+
+  connect( ui.autoApply, &QCheckBox::stateChanged, this, &DictHeadwords::autoApplyStateChanged );
+
+  connect( ui.filterLine, &QLineEdit::textChanged, this, &DictHeadwords::filterChangedInternal );
+  connect( ui.searchModeCombo, &QComboBox::currentIndexChanged, this, &DictHeadwords::filterChangedInternal );
+  connect( ui.matchCase, &QCheckBox::stateChanged, this, &DictHeadwords::filterChangedInternal );
+
+  connect( ui.headersListView, &QAbstractItemView::clicked, this, &DictHeadwords::itemClicked );
+
+
+  ui.headersListView->installEventFilter( this );
+
+  setup( dict_ );
+}
+
+DictHeadwords::~DictHeadwords()
+{
+  if ( delegate ) {
+    delegate->deleteLater();
+  }
+}
+
+void DictHeadwords::setup( Dictionary::Class * dict_ )
+{
+  QApplication::setOverrideCursor( Qt::WaitCursor );
+
+  dict = dict_;
+
+  setWindowTitle( QString::fromUtf8( dict->getName().c_str() ) );
+
+  std::shared_ptr< HeadwordListModel > other = std::make_shared< HeadwordListModel >();
+  model.swap( other );
+  model->setMaxFilterResults( ui.filterMaxResult->value() );
+  model->setDict( dict );
+  proxy->setSourceModel( model.get() );
+  proxy->sort( 0 );
+  filterChanged();
+
+  ui.autoApply->setEnabled( true );
+  ui.autoApply->setChecked( cfg.headwordsDialog.autoApply );
+
+  ui.applyButton->setEnabled( !ui.autoApply->isChecked() );
+
+  bool exceedLimit = model->totalCount() > HEADWORDS_MAX_LIMIT;
+  ui.filterMaxResult->setEnabled( exceedLimit );
+
+  setWindowIcon( dict->getIcon() );
+
+  dictId = QString( dict->getId().c_str() );
+
+  QApplication::restoreOverrideCursor();
+  connect( model.get(), &HeadwordListModel::numberPopulated, this, [ this ]( int _ ) {
+    showHeadwordsNumber();
+  } );
+  connect( proxy, &QAbstractItemModel::dataChanged, this, &DictHeadwords::showHeadwordsNumber );
+  connect( ui.filterMaxResult, &QSpinBox::valueChanged, this, [ this ]( int _value ) {
+    model->setMaxFilterResults( _value );
+  } );
+}
+
+void DictHeadwords::savePos()
+{
+  cfg.headwordsDialog.searchMode              = ui.searchModeCombo->currentIndex();
+  cfg.headwordsDialog.matchCase               = ui.matchCase->isChecked();
+  cfg.headwordsDialog.autoApply               = ui.autoApply->isChecked();
+  cfg.headwordsDialog.headwordsDialogGeometry = saveGeometry();
+}
+
+bool DictHeadwords::eventFilter( QObject * obj, QEvent * ev )
+{
+  if ( obj == ui.headersListView && ev->type() == QEvent::KeyPress ) {
+    auto * kev = dynamic_cast< QKeyEvent * >( ev );
+    if ( kev->key() == Qt::Key_Return || kev->key() == Qt::Key_Enter ) {
+      itemClicked( ui.headersListView->currentIndex() );
+      return true;
+    }
+    else if ( kev->key() == Qt::Key_Up ) {
+      auto index = ui.headersListView->currentIndex();
+      if ( index.row() == 0 ) {
+        return true;
+      }
+      auto preIndex = ui.headersListView->model()->index( index.row() - 1, index.column() );
+      ui.headersListView->setCurrentIndex( preIndex );
+      return true;
+    }
+    else if ( kev->key() == Qt::Key_Down ) {
+      auto index = ui.headersListView->currentIndex();
+      if ( index.row() == ui.headersListView->model()->rowCount() - 1 ) {
+        return true;
+      }
+      auto preIndex = ui.headersListView->model()->index( index.row() + 1, index.column() );
+      ui.headersListView->setCurrentIndex( preIndex );
+      return true;
+    }
+  }
+  return QDialog::eventFilter( obj, ev );
+}
+
+void DictHeadwords::okButtonClicked()
+{
+  savePos();
+  emit closeDialog();
+}
+
+void DictHeadwords::reject()
+{
+  savePos();
+  emit closeDialog();
+}
+
+void DictHeadwords::exportButtonClicked()
+{
+  saveHeadersToFile();
+}
+
+void DictHeadwords::filterChangedInternal()
+{
+  if ( ui.autoApply->isChecked() ) {
+    QTimer::singleShot( 100, this, &DictHeadwords::filterChanged );
+  }
+}
+
+QRegularExpression DictHeadwords::getFilterRegex() const
+{
+  const SearchType syntax =
+    static_cast< SearchType >( ui.searchModeCombo->itemData( ui.searchModeCombo->currentIndex() ).toInt() );
+
+  QRegularExpression::PatternOptions options = QRegularExpression::UseUnicodePropertiesOption;
+  if ( !ui.matchCase->isChecked() ) {
+    options |= QRegularExpression::CaseInsensitiveOption;
+  }
+
+  QString pattern;
+  switch ( syntax ) {
+    case SearchType::FixedString:
+      pattern = QRegularExpression::escape( ui.filterLine->text() );
+      break;
+    case SearchType::Wildcard:
+      pattern = wildcardsToRegexp( ui.filterLine->text() );
+      break;
+    default:
+      pattern = ui.filterLine->text();
+      break;
+  }
+
+  QRegularExpression regExp = QRegularExpression( pattern, options );
+
+  if ( !regExp.isValid() ) {
+    qWarning( "Invalid regexp pattern: %s", pattern.toUtf8().data() );
+  }
+  return regExp;
+}
+
+void DictHeadwords::filterChanged()
+{
+  const QRegularExpression regExp = getFilterRegex();
+
+  QApplication::setOverrideCursor( Qt::WaitCursor );
+
+  model->setFilter( regExp );
+
+  proxy->setFilterRegularExpression( regExp );
+  proxy->sort( 0 );
+
+  QApplication::restoreOverrideCursor();
+
+  showHeadwordsNumber();
+}
+
+void DictHeadwords::itemClicked( const QModelIndex & index )
+{
+  QVariant value = proxy->data( index, Qt::DisplayRole );
+  if ( value.canConvert< QString >() ) {
+    QString headword = value.toString();
+    emit headwordSelected( headword, dictId );
+  }
+}
+
+void DictHeadwords::autoApplyStateChanged( int state )
+{
+  ui.applyButton->setEnabled( state == Qt::Unchecked );
+}
+
+void DictHeadwords::showHeadwordsNumber()
+{
+  if ( ui.filterLine->text().isEmpty() ) {
+    ui.headersNumber->setText( tr( "Unique headwords total: %1." ).arg( QString::number( model->totalCount() ) ) );
+  }
+  else {
+    ui.headersNumber->setText( tr( "Unique headwords total: %1, filtered(limited): %2" )
+                                 .arg( QString::number( model->totalCount() ), QString::number( proxy->rowCount() ) ) );
+  }
+}
+
+void DictHeadwords::exportAllWords( QProgressDialog & progress, QTextStream & out )
+{
+  if ( const QRegularExpression regExp = getFilterRegex(); regExp.isValid() && !regExp.pattern().isEmpty() ) {
+    loadRegex( progress, out );
+    return;
+  }
+
+  int totalCount = 0;
+  int nodeIndex  = 0;
+  auto headwords = model->getRemainRows( nodeIndex );
+  while ( !headwords.isEmpty() ) {
+    if ( progress.wasCanceled() ) {
+      break;
+    }
+    QList< QString > sortedBatch = headwords.values();
+    sortedBatch.sort( Qt::CaseInsensitive );
+    for ( const auto & item : sortedBatch ) {
+      progress.setValue( ++totalCount );
+      writeWordToFile( out, item );
+    }
+
+
+    headwords = model->getRemainRows( nodeIndex );
+  }
+}
+
+void DictHeadwords::loadRegex( QProgressDialog & progress, QTextStream & out )
+{
+  int totalCount = 0;
+  for ( int i = 0; i < proxy->rowCount(); ++i ) {
+    if ( progress.wasCanceled() ) {
+      break;
+    }
+
+    QModelIndex proxyIndex = proxy->index( i, 0 );
+    QVariant value         = proxy->data( proxyIndex, Qt::DisplayRole );
+    if ( value.canConvert< QString >() ) {
+      writeWordToFile( out, value.toString() );
+      progress.setValue( ++totalCount );
+    }
+  }
+}
+
+void DictHeadwords::saveHeadersToFile()
+{
+  QString exportPath;
+  if ( cfg.headwordsDialog.headwordsExportPath.isEmpty() ) {
+    exportPath = QDir::homePath();
+  }
+  else {
+    exportPath = QDir::fromNativeSeparators( cfg.headwordsDialog.headwordsExportPath );
+    if ( !QDir( exportPath ).exists() ) {
+      exportPath = QDir::homePath();
+    }
+  }
+
+  const QString fileName = QFileDialog::getSaveFileName( this,
+                                                         tr( "Save headwords to file" ),
+                                                         exportPath,
+                                                         tr( "Text files (*.txt);;All files (*.*)" ) );
+  if ( fileName.size() == 0 ) {
+    return;
+  }
+
+  QFile file( fileName );
+
+  if ( !file.open( QFile::WriteOnly | QIODevice::Text ) ) {
+    QMessageBox::critical( this, "MicroDict", tr( "Can not open exported file" ) );
+    return;
+  }
+
+  cfg.headwordsDialog.headwordsExportPath =
+    QDir::toNativeSeparators( QFileInfo( fileName ).absoluteDir().absolutePath() );
+
+  const int headwordsNumber = model->totalCount();
+
+  QProgressDialog progress( tr( "Export headwords..." ), tr( "Cancel" ), 0, headwordsNumber, this );
+  progress.setWindowModality( Qt::WindowModal );
+
+  QTextStream out( &file );
+  out.setGenerateByteOrderMark( true );
+
+  exportAllWords( progress, out );
+
+  file.close();
+
+  progress.setValue( progress.maximum() );
+  if ( progress.wasCanceled() ) {
+    QMessageBox::warning( this, "MicroDict", tr( "Export process is interrupted" ) );
+    qWarning( "Headers export error: %s", file.errorString().toUtf8().data() );
+  }
+  else {
+    progress.close();
+    QMessageBox::information( this, "MicroDict", tr( "Export finished" ) );
+  }
+}
+void DictHeadwords::writeWordToFile( QTextStream & out, const QString & word )
+{
+  QByteArray line = word.toUtf8();
+
+  line.replace( '\n', ' ' );
+  line.replace( '\r', ' ' );
+
+  out << line << Qt::endl;
+}

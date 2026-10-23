@@ -1,0 +1,11 @@
+/* This file is (c) 2013 Maksim Tamkovicz <quendimax@gmail.com>
+ * Licensed under GPLv3 or later, see the LICENSE file */
+
+#pragma once
+
+#include "dictionary.hh"
+
+namespace BelarusianTranslit {
+
+std::vector< sptr< Dictionary::Class > > makeDictionaries();
+}

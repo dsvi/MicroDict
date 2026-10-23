@@ -1,0 +1,58 @@
+name: Release AppImage
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+jobs:
+  appimage:
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: x86_64
+            runner: ubuntu-24.04
+          - arch: aarch64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v6
+      - run: ./build-appimage.sh
+      - uses: actions/upload-artifact@v7
+        with:
+          name: appimage-${{ matrix.arch }}
+          path: build-out/*.AppImage
+          retention-days: 7
+          if-no-files-found: error
+  publish:
+    needs: appimage
+    permissions:
+      contents: write
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v8
+        with:
+          name: appimage-x86_64
+          path: dist
+      - uses: actions/download-artifact@v8
+        with:
+          name: appimage-aarch64
+          path: dist
+      - run: cd dist && sha256sum MicroDict-*.AppImage > SHA256SUMS.txt
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(xargs < VERSION)
+          gh release create "v${version}" \
+            --target "${GITHUB_SHA}" \
+            --title "v${version}" \
+            --generate-notes \
+            dist/*.AppImage dist/SHA256SUMS.txt

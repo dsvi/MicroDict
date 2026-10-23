@@ -1,0 +1,15 @@
+build/
+build**/
+build-out/
+debug/
+release/
+tmp/
+probe/
+cmake-build-*/
+_deps/
+.cache/
+.vscode/
+.idea/
+*.o
+*~
+locale/*.qm

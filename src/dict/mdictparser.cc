@@ -1,0 +1,601 @@
+// https://bitbucket.org/xwang/mdict-analysis
+// https://github.com/zhansliu/writemdict/blob/master/fileformat.md
+// Octopus MDict Dictionary File (.mdx) and Resource File (.mdd) Analyser
+//
+// Copyright (C) 2012, 2013 Xiaoqiang Wang <xiaoqiangwang AT gmail DOT com>
+// Copyright (C) 2013 Timon Wong <timon86.wang AT gmail DOT com>
+// Copyright (C) 2015 Zhe Wang <0x1998 AT gmail DOT com>
+//
+// This program is a free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, version 3 of the License.
+//
+// You can get a copy of GNU General Public License along this program
+// But you can always get it from http://www.gnu.org/licenses/gpl.txt
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+
+#include "mdictparser.hh"
+
+#include "decompress.hh"
+#include "htmlescape.hh"
+#include "iconv.hh"
+#include "ripemd.hh"
+#include "utils.hh"
+#include <QByteArray>
+#include <QDataStream>
+#include <QDomDocument>
+#include <QStringList>
+#include <QTextDocumentFragment>
+#include <QtEndian>
+#include <lzo/lzo1x.h>
+#include <zlib.h>
+
+namespace Mdict {
+
+enum EncryptedSection {
+  EcryptedHeadWordIndex  = 2
+};
+
+static inline int u16StrSize( const ushort * unicode )
+{
+  int size = 0;
+  if ( unicode ) {
+    while ( unicode[ size ] != 0 ) {
+      size++;
+    }
+  }
+  return size;
+}
+
+static QDomNamedNodeMap parseHeaderAttributes( const QString & headerText )
+{
+  QDomNamedNodeMap attributes;
+  QDomDocument doc;
+  doc.setContent( headerText );
+
+  QDomElement docElem = doc.documentElement();
+  attributes          = docElem.attributes();
+
+
+  return attributes;
+}
+
+size_t MdictParser::RecordIndex::bsearch( const vector< MdictParser::RecordIndex > & offsets, qint64 val )
+{
+  if ( offsets.size() == 0 ) {
+    return (size_t)( -1 );
+  }
+
+  auto it = std::lower_bound( offsets.begin(), offsets.end(), val );
+  if ( it != offsets.end() && *it == val ) {
+    return std::distance( offsets.begin(), it );
+  }
+
+  return (size_t)( -1 );
+}
+
+MdictParser::MdictParser():
+  version_( 0 ),
+  numHeadWordBlocks_( 0 ),
+  headWordBlockInfoSize_( 0 ),
+  headWordBlockSize_( 0 ),
+  headWordBlockInfoPos_( 0 ),
+  headWordPos_( 0 ),
+  totalRecordsSize_( 0 ),
+  recordPos_( 0 ),
+  wordCount_( 0 ),
+  numberTypeSize_( 0 ),
+  encrypted_( 0 ),
+  rtl_( false )
+{
+}
+
+bool MdictParser::open( const char * filename )
+{
+  filename_ = QString::fromUtf8( filename );
+  file_     = new QFile( filename_ );
+
+  qDebug( "MdictParser: open %s", filename );
+
+  if ( file_.isNull() || !file_->exists() ) {
+    return false;
+  }
+
+  if ( !file_->open( QIODevice::ReadOnly ) ) {
+    return false;
+  }
+
+  QDataStream in( file_ );
+  in.setByteOrder( QDataStream::BigEndian );
+
+  if ( !readHeader( in ) ) {
+    return false;
+  }
+
+  if ( !readHeadWordBlockInfos( in ) ) {
+    return false;
+  }
+
+  if ( !readRecordBlockInfos() ) {
+    return false;
+  }
+
+  return true;
+}
+
+bool MdictParser::readNextHeadWordIndex( MdictParser::HeadWordIndex & headWordIndex )
+{
+  if ( headWordBlockInfosIter_ == headWordBlockInfos_.end() ) {
+    return false;
+  }
+
+  qint64 compressedSize   = headWordBlockInfosIter_->first;
+  qint64 decompressedSize = headWordBlockInfosIter_->second;
+
+  if ( compressedSize < 8 ) {
+    return false;
+  }
+
+  ScopedMemMap compressed( *file_, headWordPos_, compressedSize );
+  if ( !compressed.startAddress() ) {
+    return false;
+  }
+
+  headWordPos_ += compressedSize;
+  QByteArray decompressed;
+  if ( !parseCompressedBlock( compressedSize, (char *)compressed.startAddress(), decompressedSize, decompressed ) ) {
+    return false;
+  }
+
+  headWordIndex = splitHeadWordBlock( decompressed );
+  ++headWordBlockInfosIter_;
+  return true;
+}
+
+bool MdictParser::checkAdler32( const char * buffer, unsigned int len, quint32 checksum )
+{
+  uLong adler = adler32( 0L, Z_NULL, 0 );
+  adler       = adler32( adler, (const Bytef *)buffer, len );
+  return ( adler & 0xFFFFFFFF ) == checksum;
+}
+
+QString MdictParser::toUtf16( const char * fromCode, const char * from, size_t fromSize )
+{
+  if ( !fromCode || !from ) {
+    return QString();
+  }
+
+  return Iconv::toQString( fromCode, from, fromSize );
+}
+
+bool MdictParser::decryptHeadWordIndex( char * buffer, qint64 len )
+{
+  RIPEMD128 ripemd;
+  ripemd.update( (const uchar *)buffer + 4, 4 );
+  ripemd.update( (const uchar *)"\x95\x36\x00\x00", 4 );
+
+  uint8_t key[ 16 ];
+  ripemd.digest( key );
+
+  buffer += 8;
+  len -= 8;
+  uint8_t prev = 0x36;
+  for ( qint64 i = 0; i < len; ++i ) {
+    uint8_t byte = buffer[ i ];
+    byte         = ( byte >> 4 ) | ( byte << 4 );
+    byte         = byte ^ prev ^ ( i & 0xFF ) ^ key[ i % 16 ];
+    prev         = buffer[ i ];
+    buffer[ i ]  = byte;
+  }
+  return true;
+}
+
+bool MdictParser::parseCompressedBlock( qint64 compressedBlockSize,
+                                        const char * compressedBlockPtr,
+                                        qint64 decompressedBlockSize,
+                                        QByteArray & decompressedBlock )
+{
+  if ( compressedBlockSize <= 8 ) {
+    return false;
+  }
+
+  quint32 type     = qFromBigEndian< quint32 >( (const uchar *)compressedBlockPtr );
+  quint32 checksum = qFromBigEndian< quint32 >( (const uchar *)compressedBlockPtr + 4 );
+  const char * buf = compressedBlockPtr + 8;
+  qint64 size      = compressedBlockSize - 8;
+
+  switch ( type ) {
+    case 0x00000000:
+      if ( !checkAdler32( buf, size, checksum ) ) {
+        qWarning( "MDict: parseCompressedBlock: plain: checksum not match" );
+        return false;
+      }
+
+      decompressedBlock = QByteArray( buf, size );
+      return true;
+
+    case 0x01000000: {
+      int result;
+      lzo_uint blockSize = (lzo_uint)decompressedBlockSize;
+      decompressedBlock.resize( blockSize );
+      result = lzo1x_decompress_safe( (const uchar *)buf, size, (uchar *)decompressedBlock.data(), &blockSize, nullptr );
+
+      if ( result != LZO_E_OK || blockSize != (lzo_uint)decompressedBlockSize ) {
+        qWarning( "MDict: parseCompressedBlock: decompression failed" );
+        return false;
+      }
+
+      if ( checksum
+           != lzo_adler32( lzo_adler32( 0, nullptr, 0 ), (const uchar *)decompressedBlock.constData(), blockSize ) ) {
+        qWarning( "MDict: parseCompressedBlock: lzo: checksum does not match" );
+        return false;
+      }
+    } break;
+
+    case 0x02000000:
+      decompressedBlock = zlibDecompress( buf, size, checksum );
+      if ( decompressedBlock.isEmpty() ) {
+        qWarning( "MDict: parseCompressedBlock: zlib: failed to decompress or checksum does not match" );
+        return false;
+      }
+      break;
+    default:
+      qWarning( "MDict: parseCompressedBlock: unknown type" );
+      return false;
+  }
+
+  return true;
+}
+
+qint64 MdictParser::readNumber( QDataStream & in )
+{
+  if ( numberTypeSize_ == 8 ) {
+    qint64 val;
+    in >> val;
+    return val;
+  }
+  else {
+    quint32 val;
+    in >> val;
+    return val;
+  }
+}
+
+quint32 MdictParser::readU8OrU16( QDataStream & in, bool isU16 )
+{
+  if ( isU16 ) {
+    quint16 val;
+    in >> val;
+    return val;
+  }
+  else {
+    quint8 val;
+    in >> val;
+    return val;
+  }
+}
+
+bool MdictParser::readHeader( QDataStream & in )
+{
+  qint32 headerTextSize;
+  in >> headerTextSize;
+
+  QByteArray headerTextUtf16 = file_->read( headerTextSize );
+  if ( headerTextUtf16.size() != headerTextSize ) {
+    return false;
+  }
+
+  QString headerText = toUtf16( "UTF-16LE", headerTextUtf16.constData(), headerTextUtf16.size() );
+
+  quint32 checksum;
+  in.setByteOrder( QDataStream::LittleEndian );
+  in >> checksum;
+  if ( !checkAdler32( headerTextUtf16.constData(), headerTextUtf16.size(), checksum ) ) {
+    qWarning( "MDict: readHeader: checksum does not match" );
+    return false;
+  }
+  headerTextUtf16.clear();
+  in.setByteOrder( QDataStream::BigEndian );
+
+  QString styleSheets;
+
+  if ( headerText.contains( "StyleSheet" ) ) {
+    const QRegularExpression rx( "StyleSheet=\"([^\"]*?)\"", QRegularExpression::CaseInsensitiveOption );
+
+    auto match = rx.match( headerText );
+
+    if ( match.hasMatch() || match.hasPartialMatch() ) {
+      styleSheets = match.captured( 1 );
+    }
+  }
+
+  headerText.remove( QRegularExpression( "\\p{C}", QRegularExpression::UseUnicodePropertiesOption ) );
+
+  QDomNamedNodeMap headerAttributes = parseHeaderAttributes( headerText );
+
+  if ( headerAttributes.isEmpty() ) {
+    return false;
+  }
+
+  encoding_ = headerAttributes.namedItem( "Encoding" ).toAttr().value();
+  if ( encoding_ == "GBK" || encoding_ == "GB2312" ) {
+    encoding_ = "GB18030";
+  }
+  else if ( encoding_.isEmpty() || encoding_ == "UTF-16" ) {
+    encoding_ = "UTF-16LE";
+  }
+
+  if ( !styleSheets.isEmpty() ) {
+    QStringList lines = styleSheets.split( QRegularExpression( "[\r\n]" ), Qt::KeepEmptyParts );
+
+    for ( int i = 0; i < lines.size() - 3; i += 3 ) {
+      styleSheets_[ lines[ i ].toInt() ] =
+        pair( Html::fromHtmlEscaped( lines[ i + 1 ] ), Html::fromHtmlEscaped( lines[ i + 2 ] ) );
+    }
+  }
+
+  version_ = headerAttributes.namedItem( "GeneratedByEngineVersion" ).toAttr().value().toDouble();
+  if ( version_ < 2.0 ) {
+    numberTypeSize_ = 4;
+  }
+  else {
+    numberTypeSize_ = 8;
+  }
+
+  encrypted_ = headerAttributes.namedItem( "Encrypted" ).toAttr().value().toInt();
+
+  rtl_          = headerAttributes.namedItem( "Left2Right" ).toAttr().value() != "Yes";
+  QString title = headerAttributes.namedItem( "Title" ).toAttr().value();
+  if ( title.isEmpty() || title == "Title (No HTML code allowed)" ) {
+    QFileInfo fi( filename_ );
+    title_ = fi.completeBaseName();
+  }
+  else {
+    if ( title.contains( '<' ) || title.contains( '>' ) ) {
+      title_ = QTextDocumentFragment::fromHtml( title ).toPlainText();
+    }
+    else {
+      title_ = title;
+    }
+  }
+  QString description = headerAttributes.namedItem( "Description" ).toAttr().value();
+  description_        = description;
+  return true;
+}
+
+bool MdictParser::readHeadWordBlockInfos( QDataStream & in )
+{
+  QByteArray header = file_->read( version_ >= 2.0 ? ( numberTypeSize_ * 5 ) : ( numberTypeSize_ * 4 ) );
+  QDataStream stream( header );
+
+  numHeadWordBlocks_ = readNumber( stream );
+  wordCount_ = readNumber( stream );
+
+  qint64 decompressedSize;
+  if ( version_ >= 2.0 ) {
+    stream >> decompressedSize;
+  }
+
+  headWordBlockInfoSize_ = readNumber( stream );
+  headWordBlockSize_ = readNumber( stream );
+
+  if ( version_ >= 2.0 ) {
+    quint32 checksum;
+    in >> checksum;
+    if ( !checkAdler32( header.constData(), numberTypeSize_ * 5, checksum ) ) {
+      return false;
+    }
+  }
+
+  headWordBlockInfoPos_ = file_->pos();
+
+  QByteArray headWordBlockInfo = file_->read( headWordBlockInfoSize_ );
+  if ( headWordBlockInfo.size() != headWordBlockInfoSize_ ) {
+    return false;
+  }
+
+  if ( version_ >= 2.0 ) {
+    if ( encrypted_ & EcryptedHeadWordIndex ) {
+      if ( !decryptHeadWordIndex( headWordBlockInfo.data(), headWordBlockInfo.size() ) ) {
+        return false;
+      }
+    }
+
+    QByteArray decompressed;
+    if ( !parseCompressedBlock( headWordBlockInfo.size(), headWordBlockInfo.data(), decompressedSize, decompressed ) ) {
+      return false;
+    }
+
+    headWordBlockInfos_ = decodeHeadWordBlockInfo( decompressed );
+  }
+  else {
+    headWordBlockInfos_ = decodeHeadWordBlockInfo( headWordBlockInfo );
+  }
+
+  headWordPos_            = file_->pos();
+  headWordBlockInfosIter_ = headWordBlockInfos_.begin();
+  return true;
+}
+
+bool MdictParser::readRecordBlockInfos()
+{
+  file_->seek( headWordBlockInfoPos_ + headWordBlockInfoSize_ + headWordBlockSize_ );
+
+  QDataStream in( file_ );
+  in.setByteOrder( QDataStream::BigEndian );
+  qint64 numRecordBlocks = readNumber( in );
+  readNumber( in );
+  qint64 recordInfoSize = readNumber( in );
+  totalRecordsSize_     = readNumber( in );
+  recordPos_            = file_->pos() + recordInfoSize;
+
+  recordBlockInfos_.reserve( numRecordBlocks );
+
+  qint64 acc1 = 0;
+  qint64 acc2 = 0;
+  for ( qint64 i = 0; i < numRecordBlocks; i++ ) {
+    RecordIndex r;
+    r.compressedSize   = readNumber( in );
+    r.decompressedSize = readNumber( in );
+    r.startPos         = acc1;
+    r.endPos           = acc1 + r.compressedSize;
+    r.shadowStartPos   = acc2;
+    r.shadowEndPos     = acc2 + r.decompressedSize;
+    recordBlockInfos_.push_back( r );
+
+    acc1 = r.endPos;
+    acc2 = r.shadowEndPos;
+  }
+
+  return true;
+}
+
+MdictParser::BlockInfoVector MdictParser::decodeHeadWordBlockInfo( const QByteArray & headWordBlockInfo )
+{
+  BlockInfoVector headWordBlockInfos;
+
+  QDataStream s( headWordBlockInfo );
+  s.setByteOrder( QDataStream::BigEndian );
+
+  bool isU16       = false;
+  int textTermSize = 0;
+
+  if ( version_ >= 2.0 ) {
+    isU16        = true;
+    textTermSize = 1;
+  }
+
+  while ( !s.atEnd() ) {
+    s.skipRawData( numberTypeSize_ );
+    quint32 textHeadSize = readU8OrU16( s, isU16 );
+    if ( encoding_ != "UTF-16LE" ) {
+      s.skipRawData( textHeadSize + textTermSize );
+    }
+    else {
+      s.skipRawData( ( textHeadSize + textTermSize ) * 2 );
+    }
+    quint32 textTailSize = readU8OrU16( s, isU16 );
+    if ( encoding_ != "UTF-16LE" ) {
+      s.skipRawData( textTailSize + textTermSize );
+    }
+    else {
+      s.skipRawData( ( textTailSize + textTermSize ) * 2 );
+    }
+
+    qint64 compressedSize = readNumber( s );
+    qint64 decompressedSize = readNumber( s );
+    headWordBlockInfos.emplace_back( compressedSize, decompressedSize );
+  }
+
+  return headWordBlockInfos;
+}
+
+MdictParser::HeadWordIndex MdictParser::splitHeadWordBlock( const QByteArray & block )
+{
+  HeadWordIndex index;
+
+  const char * p   = block.constData();
+  const char * end = p + block.size();
+
+  while ( p < end ) {
+    qint64 headWordId = ( numberTypeSize_ == 8 ) ? qFromBigEndian< qint64 >( (const uchar *)p ) :
+                                                   qFromBigEndian< quint32 >( (const uchar *)p );
+    p += numberTypeSize_;
+    QByteArray headWordBuf;
+
+    if ( encoding_ == "UTF-16LE" ) {
+      int headWordLength = u16StrSize( (const ushort *)p );
+      headWordBuf        = QByteArray( p, ( headWordLength + 1 ) * 2 );
+    }
+    else {
+      int headWordLength = strlen( p );
+      headWordBuf        = QByteArray( p, headWordLength + 1 );
+    }
+    p += headWordBuf.size();
+    QString headWord = toUtf16( encoding_, headWordBuf.constBegin(), headWordBuf.size() );
+    index.emplace_back( headWordId, headWord );
+  }
+
+  return index;
+}
+
+bool MdictParser::readRecordBlock( MdictParser::HeadWordIndex & headWordIndex,
+                                   MdictParser::RecordHandler & recordHandler )
+{
+  size_t idx = 0;
+
+  for ( HeadWordIndex::const_iterator i = headWordIndex.begin(); i != headWordIndex.end(); ++i ) {
+    if ( recordBlockInfos_[ idx ].shadowEndPos <= i->first ) {
+      idx = RecordIndex::bsearch( recordBlockInfos_, i->first );
+    }
+
+    if ( idx == (size_t)( -1 ) ) {
+      return false;
+    }
+
+    const RecordIndex & recordIndex     = recordBlockInfos_[ idx ];
+    HeadWordIndex::const_iterator iNext = i + 1;
+    qint64 recordSize;
+    if ( iNext == headWordIndex.end() ) {
+      recordSize = recordIndex.shadowEndPos - i->first;
+    }
+    else {
+      recordSize = iNext->first - i->first;
+    }
+
+    RecordInfo recordInfo;
+    recordInfo.compressedBlockPos    = recordPos_ + recordIndex.startPos;
+    recordInfo.recordOffset          = i->first - recordIndex.shadowStartPos;
+    recordInfo.decompressedBlockSize = recordIndex.decompressedSize;
+    recordInfo.compressedBlockSize   = recordIndex.compressedSize;
+    recordInfo.recordSize            = recordSize;
+
+    recordHandler.handleRecord( i->second, recordInfo );
+  }
+
+  return true;
+}
+
+QString & MdictParser::substituteStylesheet( QString & article, const MdictParser::StyleSheets & styleSheets )
+{
+  QRegularExpression rx( "`(\\d+)`", QRegularExpression::UseUnicodePropertiesOption );
+  QString articleNewText;
+
+  QString endStyle;
+  int pos = 0;
+
+  QRegularExpressionMatchIterator it = rx.globalMatch( article );
+  while ( it.hasNext() ) {
+    QRegularExpressionMatch match = it.next();
+    int styleId                   = match.captured( 1 ).toInt();
+    articleNewText += article.mid( pos, match.capturedStart() - pos );
+    pos = match.capturedEnd();
+
+    StyleSheets::const_iterator iter = styleSheets.find( styleId );
+
+    if ( iter != styleSheets.end() ) {
+      QString rep = endStyle + iter->second.first;
+      articleNewText += rep;
+
+      endStyle = iter->second.second;
+    }
+    else {
+      articleNewText += endStyle;
+
+      endStyle = "";
+    }
+  }
+  if ( pos ) {
+    articleNewText += Utils::rstripnull( article.mid( pos ) );
+    article = articleNewText;
+    articleNewText.clear();
+  }
+  article += endStyle;
+  return article;
+}
+
+}

@@ -1,0 +1,3682 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="ja" sourcelanguage="en">
+  <context>
+    <name>About</name>
+    <message>
+      <source>About</source>
+      <translation>このアプリについて</translation>
+    </message>
+    <message>
+      <source>Licensed under GNU GPLv3 or later</source>
+      <translation>GNU GPLv3 以降のバージョンでライセンスされている</translation>
+    </message>
+    <message>
+      <source>Copy version info</source>
+      <translation>バージョン情報をコピー</translation>
+    </message>
+  </context>
+  <context>
+    <name>ArticleMaker</name>
+    <message>
+      <source>No translation for &lt;b dir=&quot;%3&quot;&gt;%1&lt;/b&gt; was found in group &lt;b&gt;%2&lt;/b&gt;.</source>
+      <translation>グループ &lt;b&gt;%2&lt;/b&gt;では &lt;b dir=&quot;%3&quot;&gt;%1&lt;/b&gt; の記事が見つからなかった。</translation>
+    </message>
+    <message>
+      <source>No translation was found in group &lt;b&gt;%1&lt;/b&gt;.</source>
+      <translation>グループ &lt;b&gt;%1&lt;/b&gt; に翻訳が見つかりません。</translation>
+    </message>
+    <message>
+      <source>
+    &lt;div class=&quot;welcome-container&quot;&gt;
+      &lt;h3&gt;Welcome to &lt;strong&gt;MicroDict&lt;/strong&gt;!&lt;/h3&gt;
+      &lt;section&gt;
+        &lt;h4&gt;To get started&lt;/h4&gt;
+        &lt;ul&gt;
+          &lt;li&gt;Go to &lt;span class=&quot;menu-path&quot;&gt;&lt;span&gt;Edit&lt;/span&gt;&lt;span&gt;Dictionaries&lt;/span&gt;&lt;/span&gt; to add your dictionary files and organize them into groups.&lt;/li&gt;
+          &lt;li&gt;Once set up, you can look up words in this window or from other applications using the Scan Popup.&lt;/li&gt;
+          &lt;li&gt;To customize the program, explore the settings in &lt;span class=&quot;menu-path&quot;&gt;&lt;span&gt;Edit&lt;/span&gt;&lt;span&gt;Preferences&lt;/span&gt;&lt;/span&gt;. All settings have tooltips, so be sure to read them if anything is unclear.&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/section&gt;
+      &lt;p&gt;This build renders articles with Qt&apos;s rich-text engine and has &lt;strong&gt;no network support&lt;/strong&gt;: no web sites, no online dictionaries, no JavaScript. See README-lite.md for the list of dropped features.&lt;/p&gt;
+      &lt;footer class=&quot;welcome-footer&quot;&gt;
+        &lt;small&gt;Based on the original dictionary program by Konstantin Isakov (c) 2008-2013 and on its community of contributors. Licensed under GPLv3 or later.&lt;/small&gt;
+      &lt;/footer&gt;
+    &lt;/div&gt;</source>
+      <translation type="unfinished"></translation>
+    </message>
+    <message>
+      <source>Welcome!</source>
+      <translation>ようこそ!</translation>
+    </message>
+    <message>
+      <source>(untitled)</source>
+      <translation>(無題)</translation>
+    </message>
+    <message>
+      <source>(picture)</source>
+      <translation>(画像)</translation>
+    </message>
+  </context>
+  <context>
+    <name>ArticleRequest</name>
+    <message>
+      <source>From </source>
+      <translation>から: </translation>
+    </message>
+    <message>
+      <source>Query error: %1</source>
+      <translation>クエリ エラー: %1</translation>
+    </message>
+    <message>
+      <source>Close words: </source>
+      <translation>類似語: </translation>
+    </message>
+    <message>
+      <source>Compound expressions: </source>
+      <translation>複合表現: </translation>
+    </message>
+    <message>
+      <source>Individual words: </source>
+      <translation>単語ごと: </translation>
+    </message>
+  </context>
+  <context>
+    <name>ArticleView</name>
+    <message>
+      <source>Phrase not found</source>
+      <translation>フレーズが見つかりません</translation>
+    </message>
+    <message>
+      <source>Select Current Article</source>
+      <translation>記事を選択</translation>
+    </message>
+    <message>
+      <source>Copy as text</source>
+      <translation>テキストとしてコピー</translation>
+    </message>
+    <message>
+      <source>Resource</source>
+      <translation>資源</translation>
+    </message>
+    <message>
+      <source>TTS Voice</source>
+      <translation>TTS音声</translation>
+    </message>
+    <message>
+      <source>Audio</source>
+      <translation>音楽</translation>
+    </message>
+    <message>
+      <source>Video</source>
+      <translation>動画です。</translation>
+    </message>
+    <message>
+      <source>Video: %1</source>
+      <translation>動画: %1</translation>
+    </message>
+    <message>
+      <source>Definition from dictionary &quot;%1&quot;: %2</source>
+      <translation>辞書からの定義 &quot;%1&quot;: %2</translation>
+    </message>
+    <message>
+      <source>Definition: %1</source>
+      <translation>定義: %1</translation>
+    </message>
+    <message>
+      <source>ERROR: %1</source>
+      <translation>エラー: %1</translation>
+    </message>
+    <message>
+      <source>The referenced audio program doesn&apos;t exist.</source>
+      <translation>参照されたりソースが存在しません。</translation>
+    </message>
+    <message>
+      <source>The referenced resource doesn&apos;t exist.</source>
+      <translation>参照されたりソースが存在しません。</translation>
+    </message>
+    <message>
+      <source>Op&amp;en Link</source>
+      <translation>リンクを開く(&amp;E)</translation>
+    </message>
+    <message>
+      <source>Open Link in New &amp;Tab</source>
+      <translation>新しいタブでリンクを開く(&amp;T)</translation>
+    </message>
+    <message>
+      <source>Open Link in &amp;External Browser</source>
+      <translation>外部ブラウザーでリンクを開く(&amp;E)</translation>
+    </message>
+    <message>
+      <source>&amp;Copy Link Location</source>
+      <translation type="unfinished"></translation>
+    </message>
+    <message>
+      <source>&amp;Copy Image</source>
+      <translation type="unfinished"></translation>
+    </message>
+    <message>
+      <source>Save &amp;image...</source>
+      <translation>画像を保存(&amp;I)...</translation>
+    </message>
+    <message>
+      <source>Open image in system viewer...</source>
+      <translation>システム ビューアで画像を開きます...</translation>
+    </message>
+    <message>
+      <source>Save s&amp;ound...</source>
+      <translation>保存(&amp;O)...</translation>
+    </message>
+    <message>
+      <source>&amp;Look up &quot;%1&quot;</source>
+      <translation>&quot;%1&quot; を検索(&amp;L)</translation>
+    </message>
+    <message>
+      <source>Look up &quot;%1&quot; in &amp;New Tab</source>
+      <translation>新しいタブで &quot;%1&quot; を検索(&amp;N)</translation>
+    </message>
+    <message>
+      <source>Send &quot;%1&quot; to input line</source>
+      <translation>&quot;%1&quot; を入力ラインに送る</translation>
+    </message>
+    <message>
+      <source>&amp;Add &quot;%1&quot; to history</source>
+      <translation>&quot;%1&quot; を履歴に追加</translation>
+    </message>
+    <message>
+      <source>Look up &quot;%1&quot; in %2</source>
+      <translation>%2 から &quot;%1&quot; を検索</translation>
+    </message>
+    <message>
+      <source>Look up &quot;%1&quot; in %2 in &amp;New Tab</source>
+      <translation>新しいタブで %2 から &quot;%1&quot; を検索(&amp;N)</translation>
+    </message>
+    <message>
+      <source>Save &amp;Bookmark &quot;%1...&quot;</source>
+      <translation>「%1...」をブックマークに保存(&amp;B)</translation>
+    </message>
+    <message>
+      <source>Save sound</source>
+      <translation>音声を保存</translation>
+    </message>
+    <message>
+      <source>Sound files (*.wav *.opus *.ogg *.oga *.mp3 *.mp4 *.aac *.flac *.mid *.wv *.ape *.spx);;All files (*.*)</source>
+      <translation>音声ファイル (*.wav *.opus *.ogg *.ogg *.mp3 *.mp4 *.aac *.flac *.mid *.wv *.ape *.spx);すべてのファイル (*..*)</translation>
+    </message>
+    <message>
+      <source>Save image</source>
+      <translation>画像を保存</translation>
+    </message>
+    <message>
+      <source>Image files (*.bmp *.jpg *.png *.tif);;All files (*.*)</source>
+      <translation>画像ファイル (*.bmp *.jpg *.png *.tif);すべてのファイル (*.*)</translation>
+    </message>
+    <message>
+      <source>Failed to play sound file: %1</source>
+      <translation>サウンド ファイルの再生に失敗しました: %1</translation>
+    </message>
+    <message>
+      <source>Failed to create temporary file.</source>
+      <translation>一時ファイルの作成に失敗しました。</translation>
+    </message>
+    <message>
+      <source>Failed to auto-open resource file, try opening manually: %1.</source>
+      <translation>リソース ファイルの自動オープンに失敗しました、手動で開いています: %1。</translation>
+    </message>
+    <message>
+      <source>WARNING: Audio Player: %1</source>
+      <translation>警告: 音声プレーヤー: %1</translation>
+    </message>
+    <message>
+      <source>&amp;Copy sound to clipboard</source>
+      <translation>サウンドをクリップボードにコピー(&amp;C)</translation>
+    </message>
+    <message>
+      <source>&amp;Copy</source>
+      <translation type="unfinished"></translation>
+    </message>
+    <message>
+      <source>Select &amp;All</source>
+      <translation type="unfinished"></translation>
+    </message>
+    <message>
+      <source>Failed to copy sound</source>
+      <translation>音声ファイルのコピーに失敗したんだ</translation>
+    </message>
+    <message>
+      <source>Failed to write complete audio data</source>
+      <translation>音声データ全体の書き込みに失敗したんだ</translation>
+    </message>
+    <message>
+      <source>Sound copied to clipboard</source>
+      <translation>音声ファイルをクリップボードにコピーしたんだ</translation>
+    </message>
+    <message>
+      <source>Failed to download sound</source>
+      <translation>音声ファイルのダウンロードに失敗したんだ</translation>
+    </message>
+    <message>
+      <source>%1 of %2 matches</source>
+      <translation>%1件目 / %2件</translation>
+    </message>
+  </context>
+  <context>
+    <name>BelarusianTranslit</name>
+    <message>
+      <source>Belarusian transliteration from latin to cyrillic (classic orthography)</source>
+      <translation>ベラルーシ語のラテン文字からキリル文字への翻字（古典正書法）</translation>
+    </message>
+    <message>
+      <source>Belarusian transliteration from latin to cyrillic (school orthography)</source>
+      <translation>ベラルーシ語のラテン文字からキリル文字への翻字（学校正書法）</translation>
+    </message>
+    <message>
+      <source>Belarusian transliteration (smoothes out the difference
+between classic and school orthography in cyrillic)</source>
+      <translation>ベラルーシ語の翻字（キリル文字における古典・学校正書法の差異を調整）</translation>
+    </message>
+  </context>
+  <context>
+    <name>ChineseConversion</name>
+    <message>
+      <source>Enable conversion from simplified characters to traditional (Hong Kong variant) characters</source>
+      <translation>簡体字から繁体字（香港用）への変換を有効にする</translation>
+    </message>
+    <message>
+      <source>Simplified to traditional Chinese (Taiwan variant) conversion</source>
+      <translation>簡体字から台湾繁体字への変換</translation>
+    </message>
+    <message>
+      <source>Simplified to traditional Chinese (Hong Kong variant) conversion</source>
+      <translation>簡体字から香港繁体字への変換</translation>
+    </message>
+    <message>
+      <source>Traditional to simplified Chinese conversion</source>
+      <translation>繁体字から簡体字への変換</translation>
+    </message>
+    <message>
+      <source>Hong Kong variant</source>
+      <translation>香港繁体字</translation>
+    </message>
+    <message>
+      <source>Enable conversion from traditional characters to simplified (Mainland) characters</source>
+      <translation>繁体字から簡体字(本土)文字への変換を可能にする</translation>
+    </message>
+    <message>
+      <source>Simplified (Mainland)</source>
+      <translation>簡略化(本土)</translation>
+    </message>
+    <message>
+      <source>Enable conversion from simplified characters to traditional (Taiwan/Standard) characters</source>
+      <translation>簡体字から繁体字(台湾/標準)文字への変換を可能にする</translation>
+    </message>
+    <message>
+      <source>Traditional (Taiwan/Standard)</source>
+      <translation>トラディカル(台湾/スタンダード)</translation>
+    </message>
+    <message>
+      <source>Enable conversion from simplified/traditional Chinese characters to Japanese Shinjitai characters</source>
+      <translation>簡体字/繁体字の中国語文字から日本語の新字体文字への変換を可能にする</translation>
+    </message>
+    <message>
+      <source>Japanese Shinjitai</source>
+      <translation>日本の新治隊</translation>
+    </message>
+    <message>
+      <source>Chinese to Japanese Shinjitai conversion</source>
+      <translation>中国から日本の新次台への改造</translation>
+    </message>
+    <message>
+      <source>Chinese and Japanese Character Con&amp;version</source>
+      <translation>中国語と日本語の文字変換</translation>
+    </message>
+    <message>
+      <source>Enable conversion between simplified Chinese, traditional Chinese (Taiwan/Hong Kong) and Japanese Shinjitai characters</source>
+      <translation>簡体字中国語、繁体字(台湾/香港)、日本語の新字台文字間の変換を可能にする</translation>
+    </message>
+  </context>
+  <context>
+    <name>CustomTranslit</name>
+    <message>
+      <source>custom transliteration</source>
+      <translation>カスタム翻字</translation>
+    </message>
+  </context>
+  <context>
+    <name>DictGroupWidget</name>
+    <message>
+      <source>Form</source>
+      <translation>フォーム</translation>
+    </message>
+    <message>
+      <source>Group icon:</source>
+      <translation>グループ アイコン:</translation>
+    </message>
+    <message>
+      <source>Shortcut:</source>
+      <translation>ショートカット:</translation>
+    </message>
+    <message>
+      <source>Favorites folder:</source>
+      <translation>お気に入りフォルダ:</translation>
+    </message>
+    <message>
+      <source>None</source>
+      <translation>なし</translation>
+    </message>
+    <message>
+      <source>From file...</source>
+      <translation>ファイルから...</translation>
+    </message>
+    <message>
+      <source>Choose a file to use as group icon</source>
+      <translation>グループ アイコンとして使用するファイルを選択します</translation>
+    </message>
+    <message>
+      <source>Images</source>
+      <translation>画像</translation>
+    </message>
+    <message>
+      <source>All files</source>
+      <translation>すべてのファイル</translation>
+    </message>
+    <message>
+      <source>Error</source>
+      <translation>エラー</translation>
+    </message>
+    <message>
+      <source>Can&apos;t read the specified image file.</source>
+      <translation>指定されたイメージ ファイルを読み取ることができません。</translation>
+    </message>
+  </context>
+  <context>
+    <name>DictGroupsWidget</name>
+    <message>
+      <source>Dictionaries: </source>
+      <translation>辞書: </translation>
+    </message>
+    <message>
+      <source>Confirmation</source>
+      <translation>確認</translation>
+    </message>
+    <message>
+      <source>Are you sure you want to generate a set of groups based on language pairs?</source>
+      <translation>言語ペアに基づいたグループを生成しますか？</translation>
+    </message>
+    <message>
+      <source>Unassigned</source>
+      <translation>未割り当て</translation>
+    </message>
+    <message>
+      <source>Auto group by folder failed.</source>
+      <translation>フォルダーごとの自動グループ化に失敗しました。</translation>
+    </message>
+    <message>
+      <source>The parent directory of %1 can not be reached.</source>
+      <translation>%1 の親ディレクトリに到達できません。</translation>
+    </message>
+    <message>
+      <source>Are you sure you want to generate a set of groups based on containing folders?</source>
+      <translation>含まれているフォルダに基づいて一連のグループを生成してもよろしいですか？</translation>
+    </message>
+    <message>
+      <source>Are you sure you want to generate a set of groups based on metadata.toml?</source>
+      <translation>metadata.tomlに基づいてグループのセットを生成してもよろしいですか？</translation>
+    </message>
+    <message>
+      <source>Combine groups by source language to &quot;%1-&gt;&quot;</source>
+      <translation>グループをソース言語別に結合し、「%1->」とする</translation>
+    </message>
+    <message>
+      <source>Combine groups by target language to &quot;-&gt;%1&quot;</source>
+      <translation>グループをターゲット言語別に結合し、「->%1」とする</translation>
+    </message>
+    <message>
+      <source>Make two-side translate group &quot;%1-%2-%1&quot;</source>
+      <translation>双方向翻訳グループ「%1-%2-%1」を作成</translation>
+    </message>
+    <message>
+      <source>Combine groups with &quot;%1&quot;</source>
+      <translation>グループを「%1」として結合</translation>
+    </message>
+    <message>
+      <source>Remove group</source>
+      <translation>グループを削除</translation>
+    </message>
+    <message>
+      <source>Are you sure you want to remove the group &lt;b&gt;%1&lt;/b&gt;?</source>
+      <translation>グループ &lt;b&gt;%1&lt;/b&gt; を削除してもよろしいですか?</translation>
+    </message>
+  </context>
+  <context>
+    <name>DictHeadwords</name>
+    <message>
+      <source>If checked any filter changes will we immediately applied to headwords list</source>
+      <translation>有効にすると、フィルタ変更が見出し語リストに即反映される</translation>
+    </message>
+    <message>
+      <source>Auto apply</source>
+      <translation>自動適用</translation>
+    </message>
+    <message>
+      <source>Press this button to apply filter to headwords list</source>
+      <translation>このボタンを押して、見出し語リストにフィルタを適用する</translation>
+    </message>
+    <message>
+      <source>Apply</source>
+      <translation>適用</translation>
+    </message>
+    <message>
+      <source>Filter string (fixed string, wildcards or regular expression)</source>
+      <translation>フィルター文字列 (固定文字列、ワイルドカードまたは正規表現)</translation>
+    </message>
+    <message>
+      <source>Filter:</source>
+      <translation>フィルタ:</translation>
+    </message>
+    <message>
+      <source>This element determines how filter string will be interpreted</source>
+      <translation>この設定は、フィルター文字列の解釈方法を指定する</translation>
+    </message>
+    <message>
+      <source>If checked on the symbols case will be take in account when filtering</source>
+      <translation>フィルタリング時にシンボルケースが考慮されます</translation>
+    </message>
+    <message>
+      <source>Match case</source>
+      <translation>大文字と小文字を区別する</translation>
+    </message>
+    <message>
+      <source>Exports headwords to file</source>
+      <translation>見出し語をファイルにエクスポート</translation>
+    </message>
+    <message>
+      <source>Export</source>
+      <translation>エクスポート</translation>
+    </message>
+    <message>
+      <source>Specify the maximum filtered headwords returned.</source>
+      <translation>フィルタ適用後の見出し語の最大表示件数を指定する。</translation>
+    </message>
+    <message>
+      <source>Text</source>
+      <translation>テキスト</translation>
+    </message>
+    <message>
+      <source>Wildcards</source>
+      <translation>ワイルドカード</translation>
+    </message>
+    <message>
+      <source>Unique headwords total: %1.</source>
+      <translation>重複を除いた見出し語の総数：%1。</translation>
+    </message>
+    <message>
+      <source>Unique headwords total: %1, filtered(limited): %2</source>
+      <translation>重複を除いた見出し語の総数：%1、フィルタ適用後（表示件数）：%2</translation>
+    </message>
+    <message>
+      <source>Save headwords to file</source>
+      <translation>見出し語をファイルに保存</translation>
+    </message>
+    <message>
+      <source>Text files (*.txt);;All files (*.*)</source>
+      <translation>テキスト ファイル (*.txt);;すべてのファイル (*.*)</translation>
+    </message>
+    <message>
+      <source>Can not open exported file</source>
+      <translation>エクスポートしたファイルを開くことができません</translation>
+    </message>
+    <message>
+      <source>Export headwords...</source>
+      <translation>ヘッドワードをエクスポート...</translation>
+    </message>
+    <message>
+      <source>Cancel</source>
+      <translation>キャンセル</translation>
+    </message>
+    <message>
+      <source>Export process is interrupted</source>
+      <translation>エクスポートプロセスが中断されました</translation>
+    </message>
+    <message>
+      <source>Export finished</source>
+      <translation>エクスポート完了</translation>
+    </message>
+    <message>
+      <source>Regular Expression</source>
+      <translation>正規表現</translation>
+    </message>
+    <message>
+      <source>Maximum:</source>
+      <translation>最大限:</translation>
+    </message>
+  </context>
+  <context>
+    <name>DictInfo</name>
+    <message>
+      <source>Open index folder</source>
+      <translation>インデックスフォルダーを開く</translation>
+    </message>
+    <message>
+      <source>Total articles:</source>
+      <translation>辞書の合計：</translation>
+    </message>
+    <message>
+      <source>Index filename:</source>
+      <translation>インデックスファイル名:</translation>
+    </message>
+    <message>
+      <source>Total words:</source>
+      <translation>単語の合計:</translation>
+    </message>
+    <message>
+      <source>Open folder</source>
+      <translation>フォルダを開く</translation>
+    </message>
+    <message>
+      <source>Translates from:</source>
+      <translation>翻訳元:</translation>
+    </message>
+    <message>
+      <source>Translates to:</source>
+      <translation>翻訳先:</translation>
+    </message>
+    <message>
+      <source>Description:</source>
+      <translation>説明:</translation>
+    </message>
+    <message>
+      <source>Show all unique dictionary headwords</source>
+      <translation>重複なしの全見出し語を表示</translation>
+    </message>
+    <message>
+      <source>Headwords</source>
+      <translation>見出し語</translation>
+    </message>
+    <message>
+      <source>Full-text search enabled</source>
+      <translation>全文検索が有効になっています</translation>
+    </message>
+    <message>
+      <source>Full-text search disabled</source>
+      <translation>全文検索が無効になっています</translation>
+    </message>
+    <message>
+      <source>Disable</source>
+      <translation>無効にする</translation>
+    </message>
+    <message>
+      <source>Enable</source>
+      <translation>有効にする</translation>
+    </message>
+    <message>
+      <source>Dictionary Components:</source>
+      <translation>辞書の構成要素:</translation>
+    </message>
+  </context>
+  <context>
+    <name>DictListModel</name>
+    <message>
+      <source>%1 entries</source>
+      <translation>%1 個のエントリ</translation>
+    </message>
+  </context>
+  <context>
+    <name>DictionaryBar</name>
+    <message>
+      <source>&amp;Dictionary Bar</source>
+      <translation>辞書バー(&amp;D)</translation>
+    </message>
+    <message>
+      <source>Extended menu with all dictionaries...</source>
+      <translation>すべての辞書を含む拡張メニュー...</translation>
+    </message>
+    <message>
+      <source>Edit this group</source>
+      <translation>このグループを編集</translation>
+    </message>
+    <message>
+      <source>Dictionary info</source>
+      <translation>辞書情報</translation>
+    </message>
+    <message>
+      <source>Dictionary headwords</source>
+      <translation>辞書の見出し語</translation>
+    </message>
+    <message>
+      <source>Open dictionary folder</source>
+      <translation>辞書フォルダを開く</translation>
+    </message>
+    <message>
+      <source>Restore selection</source>
+      <translation>選択範囲を復元</translation>
+    </message>
+    <message>
+      <source>Cancel reindex</source>
+      <translation>インデックス再作成を取り消す</translation>
+    </message>
+    <message>
+      <source>Schedule for reindex</source>
+      <translation>インデックス再作成を予約</translation>
+    </message>
+    <message>
+      <source>Cancel schedule reindex</source>
+      <translation>インデックス再作成の予約を解除</translation>
+    </message>
+    <message>
+      <source>The dictionary has been scheduled for reindexing. The index will be rebuilt on the next application restart.</source>
+      <translation>辞書の再インデックスが予約された。次回アプリ起動時に再構築される。</translation>
+    </message>
+    <message>
+      <source>Change display name</source>
+      <translation>表示名の変更</translation>
+    </message>
+    <message>
+      <source>New display name:</source>
+      <translation>新しい表示名:</translation>
+    </message>
+  </context>
+  <context>
+    <name>EditDictionaries</name>
+    <message>
+      <source>Dictionaries</source>
+      <translation>辞書</translation>
+    </message>
+    <message>
+      <source>&amp;Sources</source>
+      <translation>ソース(&amp;S)</translation>
+    </message>
+    <message>
+      <source>&amp;Dictionaries</source>
+      <translation>辞書(&amp;D)</translation>
+    </message>
+    <message>
+      <source>&amp;Groups</source>
+      <translation>グループ(&amp;G)</translation>
+    </message>
+    <message>
+      <source>Sources changed</source>
+      <translation>ソースが変更されました</translation>
+    </message>
+    <message>
+      <source>Some sources were changed. Would you like to accept the changes?</source>
+      <translation>いくつかのソースが変更されました。変更を承認しますか?</translation>
+    </message>
+    <message>
+      <source>Accept</source>
+      <translation>承認</translation>
+    </message>
+    <message>
+      <source>Cancel</source>
+      <translation>キャンセル</translation>
+    </message>
+  </context>
+  <context>
+    <name>ExternalViewer</name>
+    <message>
+      <source>the viewer program name is empty</source>
+      <translation>ビューアプログラム名が空である</translation>
+    </message>
+  </context>
+  <context>
+    <name>FTS::FullTextSearchDialog</name>
+    <message>
+      <source>Full-text search</source>
+      <translation>全文検索</translation>
+    </message>
+    <message>
+      <source>Default</source>
+      <translation>デフォルト</translation>
+    </message>
+    <message>
+      <source>Wildcards</source>
+      <translation>ワイルドカード</translation>
+    </message>
+    <message>
+      <source>Support xapian search syntax, such as AND OR +/- etc.</source>
+      <translation>AND OR +/- などの xapian 検索構文をサポートします。</translation>
+    </message>
+    <message>
+      <source>Articles found: </source>
+      <translation>見つかった記事：</translation>
+    </message>
+    <message>
+      <source>Now indexing: </source>
+      <translation>インデックス作成中: </translation>
+    </message>
+    <message>
+      <source>None</source>
+      <translation>なし</translation>
+    </message>
+    <message>
+      <source>The querying word can not be empty.</source>
+      <translation>クエリの単語を空にすることはできません。</translation>
+    </message>
+    <message>
+      <source>No dictionaries for full-text search</source>
+      <translation>全文検索用の辞書がありません</translation>
+    </message>
+  </context>
+  <context>
+    <name>FavoritesModel</name>
+    <message>
+      <source>Error in favorities file</source>
+      <translation>お気に入りファイルにエラーがあります</translation>
+    </message>
+  </context>
+  <context>
+    <name>FavoritesPaneWidget</name>
+    <message>
+      <source>&amp;Delete Selected</source>
+      <translation>選択した項目を削除(&amp;D)</translation>
+    </message>
+    <message>
+      <source>Copy Selected</source>
+      <translation>選択したものをコピー</translation>
+    </message>
+    <message>
+      <source>Add folder</source>
+      <translation>フォルダを追加</translation>
+    </message>
+    <message>
+      <source>Favorites:</source>
+      <translation>お気に入り:</translation>
+    </message>
+    <message>
+      <source>All selected items will be deleted. Continue?</source>
+      <translation>選択した項目をすべて削除します。よろしいですか？</translation>
+    </message>
+    <message>
+      <source>Are you sure you want to clear all items?</source>
+      <translation>すべての項目をクリアしてもよろしいですか?</translation>
+    </message>
+    <message>
+      <source>Make this folder the target of adding/removing words actions.</source>
+      <translation>このフォルダを単語の追加/削除アクションのターゲットにします。</translation>
+    </message>
+    <message>
+      <source>Clear</source>
+      <translation>クリア</translation>
+    </message>
+    <message>
+      <source>Clear Favorites</source>
+      <translation>お気に入りをクリア</translation>
+    </message>
+  </context>
+  <context>
+    <name>FtsSearchPanel</name>
+    <message>
+      <source>&amp;Previous</source>
+      <translation>前へ(&amp;P)</translation>
+    </message>
+    <message>
+      <source>&amp;Next</source>
+      <translation>次へ(&amp;N)</translation>
+    </message>
+  </context>
+  <context>
+    <name>FullTextSearchDialog</name>
+    <message>
+      <source>Search</source>
+      <translation>検索</translation>
+    </message>
+    <message>
+      <source>Mode:</source>
+      <translation>モード：</translation>
+    </message>
+    <message>
+      <source>Articles found:</source>
+      <translation>見つかった記事：</translation>
+    </message>
+    <message>
+      <source>Available dictionaries in group:</source>
+      <translation>グループ内の利用可能な辞書：</translation>
+    </message>
+    <message>
+      <source>Wait for indexing:</source>
+      <translation>インデックス待ち:</translation>
+    </message>
+    <message>
+      <source>Total:</source>
+      <translation>合計：</translation>
+    </message>
+    <message>
+      <source>Indexed:</source>
+      <translation>インデックス:</translation>
+    </message>
+    <message>
+      <source>Now indexing: None</source>
+      <translation>インデックス中：なし</translation>
+    </message>
+    <message>
+      <source>Cancel</source>
+      <translation>キャンセル</translation>
+    </message>
+    <message>
+      <source>Help</source>
+      <translation>ヘルプ</translation>
+    </message>
+  </context>
+  <context>
+    <name>GermanTranslit</name>
+    <message>
+      <source>German Transliteration</source>
+      <translation>ドイツ語翻字</translation>
+    </message>
+  </context>
+  <context>
+    <name>GreekTranslit</name>
+    <message>
+      <source>Greek Transliteration</source>
+      <translation>ギリシャ語翻字</translation>
+    </message>
+  </context>
+  <context>
+    <name>GroupComboBox</name>
+    <message>
+      <source>Choose a Group (Alt+G)</source>
+      <translation>グループを選択 (Alt+G)</translation>
+    </message>
+  </context>
+  <context>
+    <name>Groups</name>
+    <message>
+      <source>Dictionaries available:</source>
+      <translation>利用可能な辞書:</translation>
+    </message>
+    <message>
+      <source>Add selected dictionaries to group (Ins)</source>
+      <translation>選択された辞書をグループに追加します (Ins)</translation>
+    </message>
+    <message>
+      <source>Remove selected dictionaries from group (Del)</source>
+      <translation>選択された辞書をグループから削除します (Del)</translation>
+    </message>
+    <message>
+      <source>Groups:</source>
+      <translation>グループ：</translation>
+    </message>
+    <message>
+      <source>Rename current dictionary group</source>
+      <translation>現在の辞書グループの名前を変更します</translation>
+    </message>
+    <message>
+      <source>Re&amp;name group</source>
+      <translation>グループ名を変更(&amp;N)</translation>
+    </message>
+    <message>
+      <source>Remove all dictionary groups</source>
+      <translation>すべての辞書グループを削除します</translation>
+    </message>
+    <message>
+      <source>Remove all groups</source>
+      <translation>すべてのグループを削除</translation>
+    </message>
+    <message>
+      <source>Create language-based groups</source>
+      <translation>言語ごとのグループを作成します</translation>
+    </message>
+    <message>
+      <source>Group by Languages</source>
+      <translation>言語ごとにグループ化</translation>
+    </message>
+    <message>
+      <source>Create folder-based groups.</source>
+      <translation>フォルダーベースのグループを作成します。</translation>
+    </message>
+    <message>
+      <source>Group by Folders</source>
+      <translation>フォルダーごとにグループ化</translation>
+    </message>
+    <message>
+      <source>Group by Metadata</source>
+      <translation>メタデータによるグループ化</translation>
+    </message>
+    <message>
+      <source>Drag&amp;drop dictionaries to and from the groups, move them inside the groups, reorder the groups using your mouse.</source>
+      <translation>マウスを使ってグループ間で辞書をドラッグ アンド ドロップ、グループ内で移動、グループの順序を変更します。</translation>
+    </message>
+    <message>
+      <source>Group tabs</source>
+      <translation>タブをグループ化</translation>
+    </message>
+    <message>
+      <source>Open groups list</source>
+      <translation>グループ一覧を開く</translation>
+    </message>
+    <message>
+      <source>Add group</source>
+      <translation>グループを追加</translation>
+    </message>
+    <message>
+      <source>Give a name for the new group:</source>
+      <translation>新しいグループの名前:</translation>
+    </message>
+    <message>
+      <source>Rename group</source>
+      <translation>グループ名の変更</translation>
+    </message>
+    <message>
+      <source>Give a new name for the group:</source>
+      <translation>グループの新しい名前:</translation>
+    </message>
+    <message>
+      <source>Remove group</source>
+      <translation>グループを削除</translation>
+    </message>
+    <message>
+      <source>Are you sure you want to remove the group &lt;b&gt;%1&lt;/b&gt;?</source>
+      <translation>グループ &lt;b&gt;%1&lt;/b&gt; を削除してもよろしいですか?</translation>
+    </message>
+    <message>
+      <source>Are you sure you want to remove all the groups?</source>
+      <translation>すべてのグループを削除してもよろしいですか?</translation>
+    </message>
+    <message>
+      <source>Add a new dictionary group</source>
+      <translation>新しい辞書グループを追加</translation>
+    </message>
+    <message>
+      <source>&amp;Add group</source>
+      <translation>グループの追加(&amp;A)</translation>
+    </message>
+    <message>
+      <source>Group already exists</source>
+      <translation>グループは既に存在している</translation>
+    </message>
+    <message>
+      <source>A group with the name &apos;%1&apos; already exists.</source>
+      <translation>「%1」というグループは既に存在している。</translation>
+    </message>
+  </context>
+  <context>
+    <name>HistoryPaneWidget</name>
+    <message>
+      <source>&amp;Delete Selected</source>
+      <translation>選択した項目を削除(&amp;D)</translation>
+    </message>
+    <message>
+      <source>Copy Selected</source>
+      <translation>選択したものをコピー</translation>
+    </message>
+    <message>
+      <source>History:</source>
+      <translation>履歴：</translation>
+    </message>
+    <message>
+      <source>%1/%2</source>
+      <translation>%1/%2</translation>
+    </message>
+    <message>
+      <source>History size: %1 entries out of maximum %2</source>
+      <translation>履歴サイズ：最大%2件中%1件</translation>
+    </message>
+  </context>
+  <context>
+    <name>HotkeyWrapper</name>
+    <message>
+      <source>Show or hide the main window</source>
+      <translation type="unfinished"></translation>
+    </message>
+    <message>
+      <source>Translate the clipboard contents</source>
+      <translation type="unfinished"></translation>
+    </message>
+  </context>
+  <context>
+    <name>Hunspell</name>
+    <message>
+      <source>Spelling suggestions: </source>
+      <translation>もしかして: </translation>
+    </message>
+    <message>
+      <source>%1 Morphology</source>
+      <translation>%1 形態</translation>
+    </message>
+  </context>
+  <context>
+    <name>HunspellDictsModel</name>
+    <message>
+      <source>Enabled</source>
+      <translation>有効</translation>
+    </message>
+    <message>
+      <source>Name</source>
+      <translation>名前</translation>
+    </message>
+  </context>
+  <context>
+    <name>Initializing</name>
+    <message>
+      <source>MicroDict - Initializing</source>
+      <translation>MicroDict - 初期化中</translation>
+    </message>
+    <message>
+      <source>Indexing: </source>
+      <translation>インデックス作成: </translation>
+    </message>
+    <message>
+      <source>Dictionary Name</source>
+      <translation>辞書名</translation>
+    </message>
+    <message>
+      <source>Please wait...</source>
+      <translation>お待ちください...</translation>
+    </message>
+    <message>
+      <source>Indexing...</source>
+      <translation>インデックス作成中...</translation>
+    </message>
+    <message>
+      <source>Loading...</source>
+      <translation>読み込み中...</translation>
+    </message>
+  </context>
+  <context>
+    <name>Language</name>
+    <message>
+      <source>Afar</source>
+      <translation>アファール語</translation>
+    </message>
+    <message>
+      <source>Abkhazian</source>
+      <translation>アブハズ語</translation>
+    </message>
+    <message>
+      <source>Avestan</source>
+      <translation>アベスター語</translation>
+    </message>
+    <message>
+      <source>Afrikaans</source>
+      <translation>アフリカーンス語</translation>
+    </message>
+    <message>
+      <source>Akan</source>
+      <translation>アカン語</translation>
+    </message>
+    <message>
+      <source>Amharic</source>
+      <translation>アムハラ語</translation>
+    </message>
+    <message>
+      <source>Aragonese</source>
+      <translation>アラゴン語</translation>
+    </message>
+    <message>
+      <source>Arabic</source>
+      <translation>アラビア語</translation>
+    </message>
+    <message>
+      <source>Assamese</source>
+      <translation>アッサム語</translation>
+    </message>
+    <message>
+      <source>Avaric</source>
+      <translation>アバル語</translation>
+    </message>
+    <message>
+      <source>Aymara</source>
+      <translation>アイマラ語</translation>
+    </message>
+    <message>
+      <source>Azerbaijani</source>
+      <translation>アゼルバイジャン語</translation>
+    </message>
+    <message>
+      <source>Bashkir</source>
+      <translation>バシキール語</translation>
+    </message>
+    <message>
+      <source>Belarusian</source>
+      <translation>ベラルーシ語</translation>
+    </message>
+    <message>
+      <source>Bulgarian</source>
+      <translation>ブルガリア語</translation>
+    </message>
+    <message>
+      <source>Bihari</source>
+      <translation>ビハール語</translation>
+    </message>
+    <message>
+      <source>Bislama</source>
+      <translation>ビスラマ語</translation>
+    </message>
+    <message>
+      <source>Bambara</source>
+      <translation>バンバラ語</translation>
+    </message>
+    <message>
+      <source>Bengali</source>
+      <translation>ベンガル語</translation>
+    </message>
+    <message>
+      <source>Tibetan</source>
+      <translation>チベット語</translation>
+    </message>
+    <message>
+      <source>Breton</source>
+      <translation>ブリュターニュ語</translation>
+    </message>
+    <message>
+      <source>Bosnian</source>
+      <translation>ボスニア語</translation>
+    </message>
+    <message>
+      <source>Catalan</source>
+      <translation>カタロニア語</translation>
+    </message>
+    <message>
+      <source>Chechen</source>
+      <translation>チェチェン語</translation>
+    </message>
+    <message>
+      <source>Chamorro</source>
+      <translation>チャモロ語</translation>
+    </message>
+    <message>
+      <source>Corsican</source>
+      <translation>コルシカ語</translation>
+    </message>
+    <message>
+      <source>Cree</source>
+      <translation>クリー語</translation>
+    </message>
+    <message>
+      <source>Czech</source>
+      <translation>チェコ語</translation>
+    </message>
+    <message>
+      <source>Church Slavic</source>
+      <translation>教会スラブ語</translation>
+    </message>
+    <message>
+      <source>Chuvash</source>
+      <translation>チュバシュ語</translation>
+    </message>
+    <message>
+      <source>Welsh</source>
+      <translation>ウェールズ語</translation>
+    </message>
+    <message>
+      <source>Danish</source>
+      <translation>デンマーク語</translation>
+    </message>
+    <message>
+      <source>German</source>
+      <translation>ドイツ語</translation>
+    </message>
+    <message>
+      <source>Divehi</source>
+      <translation>ディベヒ語</translation>
+    </message>
+    <message>
+      <source>Dzongkha</source>
+      <translation>ゾンカ語</translation>
+    </message>
+    <message>
+      <source>Ewe</source>
+      <translation>エウェ語</translation>
+    </message>
+    <message>
+      <source>Greek</source>
+      <translation>ギリシャ語</translation>
+    </message>
+    <message>
+      <source>English</source>
+      <translation>英語</translation>
+    </message>
+    <message>
+      <source>Esperanto</source>
+      <translation>エスペラント語</translation>
+    </message>
+    <message>
+      <source>Spanish</source>
+      <translation>スペイン語</translation>
+    </message>
+    <message>
+      <source>Estonian</source>
+      <translation>エストニア語</translation>
+    </message>
+    <message>
+      <source>Basque</source>
+      <translation>バスク語</translation>
+    </message>
+    <message>
+      <source>Persian</source>
+      <translation>ペルシャ語</translation>
+    </message>
+    <message>
+      <source>Fulah</source>
+      <translation>ラフニ語</translation>
+    </message>
+    <message>
+      <source>Finnish</source>
+      <translation>フィンランド語</translation>
+    </message>
+    <message>
+      <source>Fijian</source>
+      <translation>フィジー語</translation>
+    </message>
+    <message>
+      <source>Faroese</source>
+      <translation>フェロー語</translation>
+    </message>
+    <message>
+      <source>French</source>
+      <translation>フランス語</translation>
+    </message>
+    <message>
+      <source>Western Frisian</source>
+      <translation>西フリジア語</translation>
+    </message>
+    <message>
+      <source>Irish</source>
+      <translation>アイルランド語</translation>
+    </message>
+    <message>
+      <source>Scottish Gaelic</source>
+      <translation>スコットランドゲール語</translation>
+    </message>
+    <message>
+      <source>Galician</source>
+      <translation>ガリシア語</translation>
+    </message>
+    <message>
+      <source>Guarani</source>
+      <translation>グアラニ語</translation>
+    </message>
+    <message>
+      <source>Gujarati</source>
+      <translation>グジャラート語</translation>
+    </message>
+    <message>
+      <source>Manx</source>
+      <translation>マン島語</translation>
+    </message>
+    <message>
+      <source>Hausa</source>
+      <translation>ハウサ語</translation>
+    </message>
+    <message>
+      <source>Hebrew</source>
+      <translation>ヘブライ語</translation>
+    </message>
+    <message>
+      <source>Hindi</source>
+      <translation>ヒンディー語</translation>
+    </message>
+    <message>
+      <source>Hiri Motu</source>
+      <translation>ヒリモツ語</translation>
+    </message>
+    <message>
+      <source>Croatian</source>
+      <translation>クロアチア語</translation>
+    </message>
+    <message>
+      <source>Haitian</source>
+      <translation>ハイチ語</translation>
+    </message>
+    <message>
+      <source>Hungarian</source>
+      <translation>ハンガリー語</translation>
+    </message>
+    <message>
+      <source>Armenian</source>
+      <translation>アルメニア語</translation>
+    </message>
+    <message>
+      <source>Herero</source>
+      <translation>ヘレロ語</translation>
+    </message>
+    <message>
+      <source>Interlingua</source>
+      <translation>インターリングア</translation>
+    </message>
+    <message>
+      <source>Indonesian</source>
+      <translation>インドネシア語</translation>
+    </message>
+    <message>
+      <source>Interlingue</source>
+      <translation>インターリング</translation>
+    </message>
+    <message>
+      <source>Igbo</source>
+      <translation>イボ語</translation>
+    </message>
+    <message>
+      <source>Sichuan Yi</source>
+      <translation>四川イ語</translation>
+    </message>
+    <message>
+      <source>Inupiaq</source>
+      <translation>イヌピアク語</translation>
+    </message>
+    <message>
+      <source>Ido</source>
+      <translation>イド語</translation>
+    </message>
+    <message>
+      <source>Icelandic</source>
+      <translation>アイスランド語</translation>
+    </message>
+    <message>
+      <source>Italian</source>
+      <translation>イタリア語</translation>
+    </message>
+    <message>
+      <source>Inuktitut</source>
+      <translation>イヌクティトゥト語</translation>
+    </message>
+    <message>
+      <source>Japanese</source>
+      <translation>日本語</translation>
+    </message>
+    <message>
+      <source>Javanese</source>
+      <translation>ジャワ語</translation>
+    </message>
+    <message>
+      <source>Georgian</source>
+      <translation>グルジア語</translation>
+    </message>
+    <message>
+      <source>Kongo</source>
+      <translation>コンゴ語</translation>
+    </message>
+    <message>
+      <source>Kikuyu</source>
+      <translation>キクユ語</translation>
+    </message>
+    <message>
+      <source>Kwanyama</source>
+      <translation>クワニャマ語</translation>
+    </message>
+    <message>
+      <source>Kazakh</source>
+      <translation>カザフ語</translation>
+    </message>
+    <message>
+      <source>Kalaallisut</source>
+      <translation>カラーリット語</translation>
+    </message>
+    <message>
+      <source>Khmer</source>
+      <translation>クメール語</translation>
+    </message>
+    <message>
+      <source>Kannada</source>
+      <translation>カンナダ語</translation>
+    </message>
+    <message>
+      <source>Korean</source>
+      <translation>韓国語</translation>
+    </message>
+    <message>
+      <source>Kanuri</source>
+      <translation>カヌリ語</translation>
+    </message>
+    <message>
+      <source>Kashmiri</source>
+      <translation>カシミール語</translation>
+    </message>
+    <message>
+      <source>Kurdish</source>
+      <translation>クルド語</translation>
+    </message>
+    <message>
+      <source>Komi</source>
+      <translation>コミ語</translation>
+    </message>
+    <message>
+      <source>Cornish</source>
+      <translation>コーンウォール語</translation>
+    </message>
+    <message>
+      <source>Kirghiz</source>
+      <translation>キルギス語</translation>
+    </message>
+    <message>
+      <source>Latin</source>
+      <translation>ラテン語</translation>
+    </message>
+    <message>
+      <source>Luxembourgish</source>
+      <translation>ルクセンブルク語</translation>
+    </message>
+    <message>
+      <source>Ganda</source>
+      <translation>ガンダ語</translation>
+    </message>
+    <message>
+      <source>Limburgish</source>
+      <translation>リンブルフ語</translation>
+    </message>
+    <message>
+      <source>Lingala</source>
+      <translation>リンガラ語</translation>
+    </message>
+    <message>
+      <source>Lao</source>
+      <translation>ラオ語</translation>
+    </message>
+    <message>
+      <source>Lithuanian</source>
+      <translation>リトアニア語</translation>
+    </message>
+    <message>
+      <source>Luba-Katanga</source>
+      <translation>ルバカタンガ語</translation>
+    </message>
+    <message>
+      <source>Latvian</source>
+      <translation>ラトビア語</translation>
+    </message>
+    <message>
+      <source>Malagasy</source>
+      <translation>マラガシ語</translation>
+    </message>
+    <message>
+      <source>Marshallese</source>
+      <translation>マーシャル語</translation>
+    </message>
+    <message>
+      <source>Maori</source>
+      <translation>マオリ語</translation>
+    </message>
+    <message>
+      <source>Macedonian</source>
+      <translation>マケドニア語</translation>
+    </message>
+    <message>
+      <source>Malayalam</source>
+      <translation>マラヤーラム語</translation>
+    </message>
+    <message>
+      <source>Mongolian</source>
+      <translation>モンゴル語</translation>
+    </message>
+    <message>
+      <source>Marathi</source>
+      <translation>マラーティー語</translation>
+    </message>
+    <message>
+      <source>Malay</source>
+      <translation>マレー語</translation>
+    </message>
+    <message>
+      <source>Maltese</source>
+      <translation>マルタ語</translation>
+    </message>
+    <message>
+      <source>Burmese</source>
+      <translation>ビルマ語</translation>
+    </message>
+    <message>
+      <source>Nauru</source>
+      <translation>ナウル語</translation>
+    </message>
+    <message>
+      <source>Norwegian Bokmal</source>
+      <translation>ノルウェー語ブークモール</translation>
+    </message>
+    <message>
+      <source>North Ndebele</source>
+      <translation>北ンデベレ語</translation>
+    </message>
+    <message>
+      <source>Nepali</source>
+      <translation>ネパール語</translation>
+    </message>
+    <message>
+      <source>Ndonga</source>
+      <translation>ンドンガ語</translation>
+    </message>
+    <message>
+      <source>Dutch</source>
+      <translation>オランダ語</translation>
+    </message>
+    <message>
+      <source>Norwegian Nynorsk</source>
+      <translation>ノルウェー語ニーノシュク</translation>
+    </message>
+    <message>
+      <source>Norwegian</source>
+      <translation>ノルウェー語</translation>
+    </message>
+    <message>
+      <source>South Ndebele</source>
+      <translation>南ンデベレ語</translation>
+    </message>
+    <message>
+      <source>Navajo</source>
+      <translation>ナバホ語</translation>
+    </message>
+    <message>
+      <source>Chichewa</source>
+      <translation>チェワ語</translation>
+    </message>
+    <message>
+      <source>Occitan</source>
+      <translation>オック語</translation>
+    </message>
+    <message>
+      <source>Ojibwa</source>
+      <translation>オジブワ語</translation>
+    </message>
+    <message>
+      <source>Oromo</source>
+      <translation>オロモ語</translation>
+    </message>
+    <message>
+      <source>Oriya</source>
+      <translation>オリヤー語</translation>
+    </message>
+    <message>
+      <source>Ossetian</source>
+      <translation>オセット語</translation>
+    </message>
+    <message>
+      <source>Panjabi</source>
+      <translation>パンジャブ語</translation>
+    </message>
+    <message>
+      <source>Pali</source>
+      <translation>パリ語</translation>
+    </message>
+    <message>
+      <source>Polish</source>
+      <translation>ポーランド語</translation>
+    </message>
+    <message>
+      <source>Pashto</source>
+      <translation>パシュトー語</translation>
+    </message>
+    <message>
+      <source>Portuguese</source>
+      <translation>ポルトガル語</translation>
+    </message>
+    <message>
+      <source>Quechua</source>
+      <translation>ケチュア語</translation>
+    </message>
+    <message>
+      <source>Raeto-Romance</source>
+      <translation>レトロマン語</translation>
+    </message>
+    <message>
+      <source>Kirundi</source>
+      <translation>キルンディ語</translation>
+    </message>
+    <message>
+      <source>Romanian</source>
+      <translation>ルーマニア語</translation>
+    </message>
+    <message>
+      <source>Russian</source>
+      <translation>ロシア語</translation>
+    </message>
+    <message>
+      <source>Kinyarwanda</source>
+      <translation>キニヤルワンダ語</translation>
+    </message>
+    <message>
+      <source>Sanskrit</source>
+      <translation>サンスクリット語</translation>
+    </message>
+    <message>
+      <source>Sardinian</source>
+      <translation>サルデーニャ語</translation>
+    </message>
+    <message>
+      <source>Sindhi</source>
+      <translation>シンド語</translation>
+    </message>
+    <message>
+      <source>Northern Sami</source>
+      <translation>北部サーミ語</translation>
+    </message>
+    <message>
+      <source>Sango</source>
+      <translation>サンゴ語</translation>
+    </message>
+    <message>
+      <source>Serbo-Croatian</source>
+      <translation>セルボ・クロアチア語</translation>
+    </message>
+    <message>
+      <source>Sinhala</source>
+      <translation>シンハラ語</translation>
+    </message>
+    <message>
+      <source>Slovak</source>
+      <translation>スロバキア語</translation>
+    </message>
+    <message>
+      <source>Slovenian</source>
+      <translation>スロベニア語</translation>
+    </message>
+    <message>
+      <source>Samoan</source>
+      <translation>サモア語</translation>
+    </message>
+    <message>
+      <source>Shona</source>
+      <translation>ショナ語</translation>
+    </message>
+    <message>
+      <source>Somali</source>
+      <translation>ソマリ語</translation>
+    </message>
+    <message>
+      <source>Albanian</source>
+      <translation>アルバニア語</translation>
+    </message>
+    <message>
+      <source>Serbian</source>
+      <translation>セルビア語</translation>
+    </message>
+    <message>
+      <source>Swati</source>
+      <translation>スワジ語</translation>
+    </message>
+    <message>
+      <source>Southern Sotho</source>
+      <translation>北ソト語</translation>
+    </message>
+    <message>
+      <source>Sundanese</source>
+      <translation>スーダン語</translation>
+    </message>
+    <message>
+      <source>Swedish</source>
+      <translation>スウェーデン語</translation>
+    </message>
+    <message>
+      <source>Swahili</source>
+      <translation>スワヒリ語</translation>
+    </message>
+    <message>
+      <source>Tamil</source>
+      <translation>タミル語</translation>
+    </message>
+    <message>
+      <source>Telugu</source>
+      <translation>テルグ語</translation>
+    </message>
+    <message>
+      <source>Tajik</source>
+      <translation>タジク語</translation>
+    </message>
+    <message>
+      <source>Thai</source>
+      <translation>タイ語</translation>
+    </message>
+    <message>
+      <source>Tigrinya</source>
+      <translation>ティグリニア語 </translation>
+    </message>
+    <message>
+      <source>Turkmen</source>
+      <translation>トルクメン語</translation>
+    </message>
+    <message>
+      <source>Tagalog</source>
+      <translation>タガログ語</translation>
+    </message>
+    <message>
+      <source>Tswana</source>
+      <translation>ツワナ語</translation>
+    </message>
+    <message>
+      <source>Tonga</source>
+      <translation>トンガ語</translation>
+    </message>
+    <message>
+      <source>Turkish</source>
+      <translation>トルコ語</translation>
+    </message>
+    <message>
+      <source>Tsonga</source>
+      <translation>ツォンガ語</translation>
+    </message>
+    <message>
+      <source>Tatar</source>
+      <translation>タタール語</translation>
+    </message>
+    <message>
+      <source>Twi</source>
+      <translation>トウィ語</translation>
+    </message>
+    <message>
+      <source>Tahitian</source>
+      <translation>タヒチ語</translation>
+    </message>
+    <message>
+      <source>Uighur</source>
+      <translation>ウイグル語</translation>
+    </message>
+    <message>
+      <source>Ukrainian</source>
+      <translation>ウクライナ語</translation>
+    </message>
+    <message>
+      <source>Urdu</source>
+      <translation>ウルドゥー語</translation>
+    </message>
+    <message>
+      <source>Uzbek</source>
+      <translation>ウズベク語</translation>
+    </message>
+    <message>
+      <source>Venda</source>
+      <translation>ベンダ語</translation>
+    </message>
+    <message>
+      <source>Vietnamese</source>
+      <translation>ベトナム語</translation>
+    </message>
+    <message>
+      <source>Volapuk</source>
+      <translation>ヴォラピュク語</translation>
+    </message>
+    <message>
+      <source>Walloon</source>
+      <translation>ワロン語</translation>
+    </message>
+    <message>
+      <source>Wolof</source>
+      <translation>ウォロフ語</translation>
+    </message>
+    <message>
+      <source>Xhosa</source>
+      <translation>ホサ語</translation>
+    </message>
+    <message>
+      <source>Yiddish</source>
+      <translation>イディッシュ語</translation>
+    </message>
+    <message>
+      <source>Yoruba</source>
+      <translation>ヨルバ語</translation>
+    </message>
+    <message>
+      <source>Zhuang</source>
+      <translation>チワン語</translation>
+    </message>
+    <message>
+      <source>Chinese</source>
+      <translation>中国語</translation>
+    </message>
+    <message>
+      <source>Zulu</source>
+      <translation>ズールー語</translation>
+    </message>
+    <message>
+      <source>Lojban</source>
+      <translation>Lojban</translation>
+    </message>
+    <message>
+      <source>Traditional Chinese</source>
+      <translation>繁体字中国語</translation>
+    </message>
+    <message>
+      <source>Simplified Chinese</source>
+      <translation>簡体字中国語</translation>
+    </message>
+    <message>
+      <source>Other</source>
+      <translation>その他</translation>
+    </message>
+    <message>
+      <source>Other Simplified Chinese dialects</source>
+      <translation>その他の簡体字中国語</translation>
+    </message>
+    <message>
+      <source>Other Traditional Chinese dialects</source>
+      <translation>その他の繁体字中国語</translation>
+    </message>
+    <message>
+      <source>Other Eastern-European languages</source>
+      <translation>その他の東ヨーロッパ諸語</translation>
+    </message>
+    <message>
+      <source>Other Western-European languages</source>
+      <translation>その他の西洋諸語</translation>
+    </message>
+    <message>
+      <source>Other Russian languages</source>
+      <translation>ロシア語以外の言語</translation>
+    </message>
+    <message>
+      <source>Other Japanese languages</source>
+      <translation>その他の日本語</translation>
+    </message>
+    <message>
+      <source>Other Baltic languages</source>
+      <translation>その他のバルト諸語</translation>
+    </message>
+    <message>
+      <source>Other Greek languages</source>
+      <translation>その他のギリシャ語言語</translation>
+    </message>
+    <message>
+      <source>Other Korean dialects</source>
+      <translation>その他の韓国語</translation>
+    </message>
+    <message>
+      <source>Other Turkish dialects</source>
+      <translation>その他のトルコ語</translation>
+    </message>
+    <message>
+      <source>Other Thai dialects</source>
+      <translation>その他のタイ語</translation>
+    </message>
+    <message>
+      <source>Tamazight</source>
+      <translation>Tamazight</translation>
+    </message>
+  </context>
+  <context>
+    <name>Language::Db</name>
+    <message>
+      <source>French</source>
+      <translation>フランス語</translation>
+    </message>
+    <message>
+      <source>Spanish</source>
+      <translation>スペイン語</translation>
+    </message>
+    <message>
+      <source>Belarusian</source>
+      <translation>ベラルーシ語</translation>
+    </message>
+    <message>
+      <source>Bulgarian</source>
+      <translation>ブルガリア語</translation>
+    </message>
+    <message>
+      <source>Czech</source>
+      <translation>チェコ語</translation>
+    </message>
+    <message>
+      <source>German</source>
+      <translation>ドイツ語</translation>
+    </message>
+    <message>
+      <source>Greek</source>
+      <translation>ギリシャ語</translation>
+    </message>
+    <message>
+      <source>Finnish</source>
+      <translation>フィンランド語</translation>
+    </message>
+    <message>
+      <source>Italian</source>
+      <translation>イタリア語</translation>
+    </message>
+    <message>
+      <source>Japanese</source>
+      <translation>日本語</translation>
+    </message>
+    <message>
+      <source>Korean</source>
+      <translation>韓国語</translation>
+    </message>
+    <message>
+      <source>Lithuanian</source>
+      <translation>リトアニア語</translation>
+    </message>
+    <message>
+      <source>Macedonian</source>
+      <translation>マケドニア語</translation>
+    </message>
+    <message>
+      <source>Dutch</source>
+      <translation>オランダ語</translation>
+    </message>
+    <message>
+      <source>Polish</source>
+      <translation>ポーランド語</translation>
+    </message>
+    <message>
+      <source>Portuguese</source>
+      <translation>ポルトガル語</translation>
+    </message>
+    <message>
+      <source>Russian</source>
+      <translation>ロシア語</translation>
+    </message>
+    <message>
+      <source>Slovak</source>
+      <translation>スロバキア語</translation>
+    </message>
+    <message>
+      <source>Albanian</source>
+      <translation>アルバニア語</translation>
+    </message>
+    <message>
+      <source>Swedish</source>
+      <translation>スウェーデン語</translation>
+    </message>
+    <message>
+      <source>Turkish</source>
+      <translation>トルコ語</translation>
+    </message>
+    <message>
+      <source>Ukrainian</source>
+      <translation>ウクライナ語</translation>
+    </message>
+    <message>
+      <source>Chinese Simplified</source>
+      <translation>中国語 (簡体字)</translation>
+    </message>
+    <message>
+      <source>Chinese Traditional</source>
+      <translation>中国語 (繁体字)</translation>
+    </message>
+    <message>
+      <source>Vietnamese</source>
+      <translation>ベトナム語</translation>
+    </message>
+    <message>
+      <source>Portuguese, Brazilian</source>
+      <translation>ポルトガル語（ブラジル）</translation>
+    </message>
+    <message>
+      <source>Persian</source>
+      <translation>ペルシャ語</translation>
+    </message>
+    <message>
+      <source>Spanish, Argentina</source>
+      <translation>スペイン語 (アルゼンチン)</translation>
+    </message>
+    <message>
+      <source>Hindi</source>
+      <translation>ヒンディー語</translation>
+    </message>
+    <message>
+      <source>Esperanto</source>
+      <translation>エスペラント語</translation>
+    </message>
+    <message>
+      <source>German, Switzerland</source>
+      <translation>ドイツ語 (スイス)</translation>
+    </message>
+    <message>
+      <source>Spanish, Bolivia</source>
+      <translation>スペイン語 (ボリビア)</translation>
+    </message>
+    <message>
+      <source>Tajik</source>
+      <translation>タジク語</translation>
+    </message>
+    <message>
+      <source>Quechua</source>
+      <translation>ケチュア語</translation>
+    </message>
+    <message>
+      <source>Aymara</source>
+      <translation>アイマラ語</translation>
+    </message>
+    <message>
+      <source>Turkmen</source>
+      <translation>トルクメン語</translation>
+    </message>
+    <message>
+      <source>Interlingue</source>
+      <translation>インターリング</translation>
+    </message>
+    <message>
+      <source>Lojban</source>
+      <translation>Lojban</translation>
+    </message>
+    <message>
+      <source>Hungarian</source>
+      <translation>ハンガリー語</translation>
+    </message>
+    <message>
+      <source>English</source>
+      <translation>英語</translation>
+    </message>
+    <message>
+      <source>Arabic</source>
+      <translation>アラビア語</translation>
+    </message>
+    <message>
+      <source>Serbian</source>
+      <translation>セルビア語</translation>
+    </message>
+    <message>
+      <source>Kabyle</source>
+      <translation>カビル語</translation>
+    </message>
+  </context>
+  <context>
+    <name>LoadDictionaries</name>
+    <message>
+      <source>Error loading dictionaries</source>
+      <translation>辞書の読み込みエラー</translation>
+    </message>
+  </context>
+  <context>
+    <name>Main</name>
+    <message>
+      <source>Error in configuration file. Continue with default settings?</source>
+      <translation>設定ファイルでエラーが発生しました。既定の設定で続行しますか？</translation>
+    </message>
+  </context>
+  <context>
+    <name>MainWindow</name>
+    <message>
+      <source>&amp;File</source>
+      <translation>ファイル(&amp;F)</translation>
+    </message>
+    <message>
+      <source>&amp;Edit</source>
+      <translation>編集(&amp;E)</translation>
+    </message>
+    <message>
+      <source>&amp;Help</source>
+      <translation>ヘルプ(&amp;H)</translation>
+    </message>
+    <message>
+      <source>&amp;View</source>
+      <translation>表示(&amp;V)</translation>
+    </message>
+    <message>
+      <source>&amp;Zoom</source>
+      <translation>ズーム&amp;Z)</translation>
+    </message>
+    <message>
+      <source>H&amp;istory</source>
+      <translation>履歴(&amp;I)</translation>
+    </message>
+    <message>
+      <source>Search</source>
+      <translation>検索</translation>
+    </message>
+    <message>
+      <source>Favo&amp;rites</source>
+      <translation>お気に入り(&amp;R)</translation>
+    </message>
+    <message>
+      <source>&amp;Search Pane</source>
+      <translation>検索ペイン(&amp;S)</translation>
+    </message>
+    <message>
+      <source>&amp;Results Navigation Pane</source>
+      <translation>結果ナビゲーションペイン(&amp;S)</translation>
+    </message>
+    <message>
+      <source>Favor&amp;ites Pane</source>
+      <translation>お気に入りペイン(&amp;I)</translation>
+    </message>
+    <message>
+      <source>&amp;History Pane</source>
+      <translation>履歴ペイン(&amp;H)</translation>
+    </message>
+    <message>
+      <source>&amp;Dictionaries...</source>
+      <translation>辞書(&amp;D)...</translation>
+    </message>
+    <message>
+      <source>&amp;Preferences...</source>
+      <translation>環境設定(&amp;P)...</translation>
+    </message>
+    <message>
+      <source>&amp;Homepage</source>
+      <translation>ホーム ページ(&amp;H)</translation>
+    </message>
+    <message>
+      <source>&amp;About</source>
+      <translation>バージョン情報(&amp;A)</translation>
+    </message>
+    <message>
+      <source>About MicroDict</source>
+      <translation>MicroDict のバージョン情報</translation>
+    </message>
+    <message>
+      <source>&amp;Quit</source>
+      <translation>終了(&amp;Q)</translation>
+    </message>
+    <message>
+      <source>Quit from application</source>
+      <translation>アプリケーションを終了します</translation>
+    </message>
+    <message>
+      <source>&amp;Forum</source>
+      <translation>フォーラム(&amp;F)</translation>
+    </message>
+    <message>
+      <source>&amp;Close To Tray</source>
+      <translation>トレイへ閉じる(&amp;C)</translation>
+    </message>
+    <message>
+      <source>Minimizes the window to tray</source>
+      <translation>トレイへウィンドウを最小化します</translation>
+    </message>
+    <message>
+      <source>&amp;Save Article</source>
+      <translation>記事を保存(&amp;S)</translation>
+    </message>
+    <message>
+      <source>Save Article</source>
+      <translation>記事の保存</translation>
+    </message>
+    <message>
+      <source>&amp;Rescan Files</source>
+      <translation>ファイルを再スキャン(&amp;R)</translation>
+    </message>
+    <message>
+      <source>&amp;Clear</source>
+      <translation>クリア(&amp;C)</translation>
+    </message>
+    <message>
+      <source>&amp;New Tab</source>
+      <translation>新しいタブ(&amp;N)</translation>
+    </message>
+    <message>
+      <source>&amp;Configuration Folder</source>
+      <translation>設定フォルダ(&amp;S)</translation>
+    </message>
+    <message>
+      <source>&amp;Show</source>
+      <translation>表示(&amp;S)</translation>
+    </message>
+    <message>
+      <source>Ctrl+H</source>
+      <translation>Ctrl+H</translation>
+    </message>
+    <message>
+      <source>&amp;Export</source>
+      <translation>エクスポート(&amp;E)</translation>
+    </message>
+    <message>
+      <source>&amp;Import</source>
+      <translation>インポート(&amp;M)</translation>
+    </message>
+    <message>
+      <source>&amp;Always on Top</source>
+      <translation>常に一番上(&amp;A)</translation>
+    </message>
+    <message>
+      <source>Always on Top</source>
+      <translation>常に一番上に表示</translation>
+    </message>
+    <message>
+      <source>Ctrl+O</source>
+      <translation>Ctrl+O</translation>
+    </message>
+    <message>
+      <source>Menu Button</source>
+      <translation>メニューボタン</translation>
+    </message>
+    <message>
+      <source>Search in page</source>
+      <translation>ページ内で検索</translation>
+    </message>
+    <message>
+      <source>Full-text search</source>
+      <translation>全文検索</translation>
+    </message>
+    <message>
+      <source>MicroDict reference</source>
+      <translation>MicroDict リファレンス</translation>
+    </message>
+    <message>
+      <source>Export</source>
+      <translation>エクスポート</translation>
+    </message>
+    <message>
+      <source>Import</source>
+      <translation>インポート</translation>
+    </message>
+    <message>
+      <source>Add</source>
+      <translation>追加</translation>
+    </message>
+    <message>
+      <source>Add current tab to Favorites</source>
+      <translation>現在のタブをお気に入りに追加</translation>
+    </message>
+    <message>
+      <source>Show Names in Dictionary &amp;Bar</source>
+      <translation>辞書バーに名前を表示(&amp;B)</translation>
+    </message>
+    <message>
+      <source>Show &amp;Small Icons in Toolbars</source>
+      <translation>ツールバーに小さいアイコンを表示する(&amp;S)</translation>
+    </message>
+    <message>
+      <source>Show &amp;Large Icons in Toolbars</source>
+      <translation>ツールバーに大きいアイコンを表示する(&amp;L)</translation>
+    </message>
+    <message>
+      <source>Show &amp;Normal Icons in Toolbars</source>
+      <translation>ツールバーに通常アイコンを表示する(&amp;N)</translation>
+    </message>
+    <message>
+      <source>&amp;Menubar</source>
+      <translation>メニューバー(&amp;M)</translation>
+    </message>
+    <message>
+      <source>&amp;Navigation</source>
+      <translation>ナビゲーション(&amp;N)</translation>
+    </message>
+    <message>
+      <source>Back</source>
+      <translation>戻る</translation>
+    </message>
+    <message>
+      <source>Forward</source>
+      <translation>進む</translation>
+    </message>
+    <message>
+      <source>Toggle clipboard monitoring</source>
+      <translation>クリップボード監視の切り替え</translation>
+    </message>
+    <message>
+      <source>Pronounce Word (Alt+S)</source>
+      <translation>単語の発音 (Alt+S)</translation>
+    </message>
+    <message>
+      <source>Zoom In</source>
+      <translation>拡大</translation>
+    </message>
+    <message>
+      <source>Zoom Out</source>
+      <translation>縮小</translation>
+    </message>
+    <message>
+      <source>Normal Size</source>
+      <translation>通常のサイズ</translation>
+    </message>
+    <message>
+      <source>Found in Dictionaries:</source>
+      <translation>辞書で見つかりました:</translation>
+    </message>
+    <message>
+      <source>Show &amp;Main Window</source>
+      <translation>メイン ウィンドウを表示(&amp;M)</translation>
+    </message>
+    <message>
+      <source>Opened tabs</source>
+      <translation>開いているタブ</translation>
+    </message>
+    <message>
+      <source>Close current tab</source>
+      <translation>現在のタブを閉じる</translation>
+    </message>
+    <message>
+      <source>Close all tabs</source>
+      <translation>すべてのタブを閉じる</translation>
+    </message>
+    <message>
+      <source>Close all tabs except current</source>
+      <translation>現在以外のすべてのタブを閉じる</translation>
+    </message>
+    <message>
+      <source>Add all tabs to Favorites</source>
+      <translation>すべてのタブをお気に入りに追加</translation>
+    </message>
+    <message>
+      <source>New Tab</source>
+      <translation>新しいタブ</translation>
+    </message>
+    <message>
+      <source>Accessibility API is not enabled</source>
+      <translation>アクセシビリティAPIが有効になっていません</translation>
+    </message>
+    <message>
+      <source>WARNING: %1</source>
+      <translation>警告: %1</translation>
+    </message>
+    <message>
+      <source>String to search in dictionaries. The wildcards &apos;*&apos;, &apos;?&apos; and sets of symbols &apos;[...]&apos; are allowed.
+To find &apos;*&apos;, &apos;?&apos;, &apos;[&apos;, &apos;]&apos; symbols use &apos;\*&apos;, &apos;\?&apos;, &apos;\[&apos;, &apos;\]&apos; respectively</source>
+      <translation>辞書で検索する文字列。ワイルドカードとして「*」「?」、および文字セット「[...]」が使用できます。
+「*」「?」「[」「]」をそのまま検索する場合は、それぞれ「\*」「\?」「\[」「\]」と入力してください。</translation>
+    </message>
+    <message>
+      <source>%1 dictionaries, %2 articles, %3 words</source>
+      <translation>%1 個の辞書、%2 個の記事、 %3 個の単語</translation>
+    </message>
+    <message>
+      <source>All</source>
+      <translation>すべて</translation>
+    </message>
+    <message>
+      <source>Open Tabs List</source>
+      <translation>タブ一覧を開く</translation>
+    </message>
+    <message>
+      <source>(untitled)</source>
+      <translation>(無題)</translation>
+    </message>
+    <message>
+      <source>Global hotkeys are not available: this desktop offers no org.freedesktop.portal.GlobalShortcuts service, which needs xdg-desktop-portal 1.16 or newer.&lt;br&gt;The rest of the application is unaffected.</source>
+      <translation type="unfinished"></translation>
+    </message>
+    <message>
+      <source>Remove current tab from Favorites</source>
+      <translation>お気に入りから現在のタブを削除</translation>
+    </message>
+    <message>
+      <source>You have chosen to hide a menubar. Use %1 to show it back.</source>
+      <translation>メニューバーを非表示にしました。 %1 を使用して表示します。</translation>
+    </message>
+    <message>
+      <source>Ctrl+M</source>
+      <translation>Ctrl+M</translation>
+    </message>
+    <message>
+      <source>The main window is set to be always on top.</source>
+      <translation>メインウィンドウは常に上に設定されています。</translation>
+    </message>
+    <message>
+      <source>&amp;Hide</source>
+      <translation>非表示 (&amp;H)</translation>
+    </message>
+    <message>
+      <source>Export history to file</source>
+      <translation>履歴をファイルにエクスポート</translation>
+    </message>
+    <message>
+      <source>Text files (*.txt);;All files (*.*)</source>
+      <translation>テキスト ファイル (*.txt);;すべてのファイル (*.*)</translation>
+    </message>
+    <message>
+      <source>Export error: </source>
+      <translation>エクスポートエラー: </translation>
+    </message>
+    <message>
+      <source>History export complete</source>
+      <translation>履歴エクスポート完了</translation>
+    </message>
+    <message>
+      <source>Import history from file</source>
+      <translation>ファイルから履歴をインポート</translation>
+    </message>
+    <message>
+      <source>Import error: </source>
+      <translation>インポートエラー：</translation>
+    </message>
+    <message>
+      <source>Import error: invalid data in file</source>
+      <translation>インポートエラー：ファイル内の無効なデータ</translation>
+    </message>
+    <message>
+      <source>History import complete</source>
+      <translation>履歴のインポート完了</translation>
+    </message>
+    <message>
+      <source>Export Favorites to file</source>
+      <translation>お気に入りをファイルにエクスポート</translation>
+    </message>
+    <message>
+      <source>Text files (*.txt);;XML files (*.xml)</source>
+      <translation>テキスト ファイル (*.txt);;XML ファイル (*.xml)</translation>
+    </message>
+    <message>
+      <source>Favorites export complete</source>
+      <translation>お気に入りのエクスポートが完了</translation>
+    </message>
+    <message>
+      <source>Import Favorites from file</source>
+      <translation>ファイルからお気に入りをインポート</translation>
+    </message>
+    <message>
+      <source>Text and XML files (*.txt *.xml);;All files (*.*)</source>
+      <translation>テキストおよび XML ファイル (*.txt *.xml);;すべてのファイル (*.*)</translation>
+    </message>
+    <message>
+      <source>Data parsing error</source>
+      <translation>データ解析エラー</translation>
+    </message>
+    <message>
+      <source>Favorites import complete</source>
+      <translation>お気に入りのインポート完了</translation>
+    </message>
+    <message>
+      <source>Dictionary info</source>
+      <translation>辞書情報</translation>
+    </message>
+    <message>
+      <source>Dictionary headwords</source>
+      <translation>辞書のheadwords</translation>
+    </message>
+    <message>
+      <source>Open dictionary folder</source>
+      <translation>辞書フォルダを開く</translation>
+    </message>
+    <message>
+      <source>Now indexing for full-text search: </source>
+      <translation>全文検索のインデックス作成: </translation>
+    </message>
+    <message>
+      <source>Remove headword &quot;%1&quot; from Favorites?</source>
+      <translation>お気に入りから見出し語 &quot;%1&quot; を削除しますか？</translation>
+    </message>
+    <message>
+      <source>Show</source>
+      <translation>表示</translation>
+    </message>
+    <message>
+      <source>Lock Panels</source>
+      <translation>パネルをロック</translation>
+    </message>
+    <message>
+      <source>Clear History</source>
+      <translation>履歴を消去</translation>
+    </message>
+    <message>
+      <source>Are you sure you want to clear all history items?</source>
+      <translation>すべての履歴項目を消去してもよろしいですか？</translation>
+    </message>
+    <message>
+      <source>Application is still running in the background. Click the tray icon to show the window.</source>
+      <translation>アプリケーションはバックグラウンドで起動中だよ。タスクトレイのアイコンをクリックしてウィンドウを表示してね。</translation>
+    </message>
+  </context>
+  <context>
+    <name>Mdx::MdxArticleRequest</name>
+    <message>
+      <source>Dictionary file was tampered or corrupted</source>
+      <translation>辞書ファイルが改ざんまたは破損しています</translation>
+    </message>
+    <message>
+      <source>Failed loading article from %1, reason: %2</source>
+      <translation>%1から記事の読み込みに失敗しました。理由: %2</translation>
+    </message>
+  </context>
+  <context>
+    <name>MultimediaAudioPlayer</name>
+    <message>
+      <source>Couldn&apos;t open audio buffer for reading.</source>
+      <translation>読み取り用のオーディオバッファを開けなかった。</translation>
+    </message>
+  </context>
+  <context>
+    <name>OrderAndProps</name>
+    <message>
+      <source>Form</source>
+      <translation>フォーム</translation>
+    </message>
+    <message>
+      <source>Dictionary order:</source>
+      <translation>辞書の順序:</translation>
+    </message>
+    <message>
+      <source>Inactive (disabled) dictionaries:</source>
+      <translation>非アクティブ (無効) な辞書:</translation>
+    </message>
+    <message>
+      <source>Dictionary information</source>
+      <translation>辞書の情報</translation>
+    </message>
+    <message>
+      <source>Name:</source>
+      <translation>名前:</translation>
+    </message>
+    <message>
+      <source>Total articles:</source>
+      <translation>辞書の合計:</translation>
+    </message>
+    <message>
+      <source>Total words:</source>
+      <translation>単語の合計:</translation>
+    </message>
+    <message>
+      <source>Translates from:</source>
+      <translation>翻訳元:</translation>
+    </message>
+    <message>
+      <source>Translates to:</source>
+      <translation>翻訳先:</translation>
+    </message>
+    <message>
+      <source>Description:</source>
+      <translation>説明:</translation>
+    </message>
+    <message>
+      <source>Adjust the order by dragging and dropping items in it. Drop dictionaries to the inactive group to disable their use.</source>
+      <translation>アイテムをドラッグ アンド ドロップして順序を調整します。使用を無効にするには非アクティブなグループへ辞書をドロップします。</translation>
+    </message>
+    <message>
+      <source>Dictionary headwords</source>
+      <translation>辞書のheadwords</translation>
+    </message>
+    <message>
+      <source>Sort by name</source>
+      <translation>名前でソート</translation>
+    </message>
+    <message>
+      <source>Sort by languages</source>
+      <translation>言語でソート</translation>
+    </message>
+    <message>
+      <source>Dictionaries active: %1, inactive: %2</source>
+      <translation>辞書はアクティブ: %1, 非アクティブ: %2</translation>
+    </message>
+    <message>
+      <source>Change display name</source>
+      <translation>表示名の変更</translation>
+    </message>
+    <message>
+      <source>New display name:</source>
+      <translation>新しい表示名:</translation>
+    </message>
+    <message>
+      <source>Dictionary components:</source>
+      <translation>辞書コンポーネント:</translation>
+    </message>
+  </context>
+  <context>
+    <name>PathsModel</name>
+    <message>
+      <source>Path</source>
+      <translation>パス</translation>
+    </message>
+    <message>
+      <source>Recursive</source>
+      <translation>再帰</translation>
+    </message>
+  </context>
+  <context>
+    <name>Preferences</name>
+    <message>
+      <source>Preferences</source>
+      <translation>環境設定</translation>
+    </message>
+    <message>
+      <source>&amp;Interface</source>
+      <translation>インターフェイス(&amp;I)</translation>
+    </message>
+    <message>
+      <source>Double-click translates the word clicked</source>
+      <translation>ダブルクリックでクリックされた単語を翻訳する</translation>
+    </message>
+    <message>
+      <source>Tabbed browsing</source>
+      <translation>タブ ブラウズ</translation>
+    </message>
+    <message>
+      <source>Normally, opening a new tab switches to it immediately.
+With this on however, new tabs will be opened without
+switching to them.</source>
+      <translation>通常、新しいタブを開くとすぐに切り替わります。
+しかしこれがオンだと、新しいタブに切り替えずに
+開きます。</translation>
+    </message>
+    <message>
+      <source>Open new tabs in background</source>
+      <translation>バックグラウンドで新しいタブを開く</translation>
+    </message>
+    <message>
+      <source>Open new tabs after the current one</source>
+      <translation>現在の後に新しいタブを開く</translation>
+    </message>
+    <message>
+      <source>Hide single tab</source>
+      <translation>タブが1つのときはタブバーを隠す</translation>
+    </message>
+    <message>
+      <source>Ctrl-Tab navigates tabs in MRU order</source>
+      <translation>Ctrl-Tab で最近使用した順にタブを切り替える</translation>
+    </message>
+    <message>
+      <source>Normally, pressing ESC key moves focus to the translation line.
+With this on however, it will hide the main window.</source>
+      <translation>通常、ESCキーを押すと、翻訳行にフォーカスが移動します。
+ただし、これをオンにするとメインウィンドウが非表示になります。</translation>
+    </message>
+    <message>
+      <source>ESC key hides main window</source>
+      <translation>ESC キーでメインウィンドウを隠す</translation>
+    </message>
+    <message>
+      <source>Turn this option on if you want to select words by single mouse click</source>
+      <translation>シングルクリックで単語を選択できるようにする場合は、このオプションを有効にしてください</translation>
+    </message>
+    <message>
+      <source>Select word by single click</source>
+      <translation>ワンクリックで単語を選択</translation>
+    </message>
+    <message>
+      <source>Startup</source>
+      <translation>スタートアップ</translation>
+    </message>
+    <message>
+      <source>Automatically starts MicroDict after operation system bootup.</source>
+      <translation>OS起動後にMicroDictが自動的に起動する。</translation>
+    </message>
+    <message>
+      <source>Start with system</source>
+      <translation>システム起動時に起動</translation>
+    </message>
+    <message>
+      <source>Normally, clicking on a link, double-clicking on a word or looking up
+selection in an article loads the translation and almost immediately
+scrolls to the article from the same dictionary. With this option off,
+however, the article from the topmost dictionary is shown.</source>
+      <translation>通常、リンクをクリックするか、単語を
+クリックするか、記事内の選択項目を検索すると、翻訳が読み込まれ、ほぼ
+に同じ辞書から記事までスクロールします。ただし、このオプションをオフ
+にすると、最上位の辞書の記事が表示されます。</translation>
+    </message>
+    <message>
+      <source>Automatically scroll to target article</source>
+      <translation>自動的にターゲット記事までスクロールする</translation>
+    </message>
+    <message>
+      <source>When enabled, an icon appears in the system tray area which can be used
+to open main window and perform other tasks.</source>
+      <translation>有効だと、メイン ウィンドウを開いたりするのに使われる
+アイコンがシステム トレイ領域に表示されます。</translation>
+    </message>
+    <message>
+      <source>Enable system tray icon</source>
+      <translation>システム トレイ アイコンを有効にする</translation>
+    </message>
+    <message>
+      <source>With this on, the application starts directly to system tray without showing
+its main window.</source>
+      <translation>これがオンだと、アプリケーションはメイン ウィンドウを表示することなく
+直接システム トレイに入って起動します。</translation>
+    </message>
+    <message>
+      <source>Start to system tray</source>
+      <translation>システムトレイで起動</translation>
+    </message>
+    <message>
+      <source>With this on, an attempt to close main window would hide it instead of closing
+the application.</source>
+      <translation>有効にすると、メインウィンドウを閉じようとすると、アプリケーションを終了せずに非表示になる。</translation>
+    </message>
+    <message>
+      <source>Close to system tray</source>
+      <translation>システム トレイへ閉じる</translation>
+    </message>
+    <message>
+      <source>Adjust this value to avoid huge context menus.</source>
+      <translation>大きすぎるコンテキストメニューを避けるために、この値を調整する。</translation>
+    </message>
+    <message>
+      <source>Context menu dictionaries limit:</source>
+      <translation>コンテキストメニュー辞書の制限:</translation>
+    </message>
+    <message>
+      <source>System default</source>
+      <translation>システム既定</translation>
+    </message>
+    <message>
+      <source>Default</source>
+      <translation>既定</translation>
+    </message>
+    <message>
+      <source>Classic</source>
+      <translation>クラシック</translation>
+    </message>
+    <message>
+      <source>Modern</source>
+      <translation>モダン</translation>
+    </message>
+    <message>
+      <source>Lingvo</source>
+      <translation>Lingvo</translation>
+    </message>
+    <message>
+      <source>Babylon</source>
+      <translation>Babylon</translation>
+    </message>
+    <message>
+      <source>Lingoes</source>
+      <translation>Lingoes</translation>
+    </message>
+    <message>
+      <source>Lingoes-Blue</source>
+      <translation>Lingoes ブルー</translation>
+    </message>
+    <message>
+      <source>Restart the program to apply the language change.</source>
+      <translation>言語の変更を適用するには、再起動が必要だ。</translation>
+    </message>
+    <message>
+      <source>Restart to apply the interface style change.</source>
+      <translation>再起動してインターフェイス スタイルの変更を適用します。</translation>
+    </message>
+    <message>
+      <source>Restart to apply the interface font change.</source>
+      <translation>インターフェースのフォントの変更を適用するには再起動してください。</translation>
+    </message>
+    <message>
+      <source>Restart needed</source>
+      <translation>再起動が必要です</translation>
+    </message>
+    <message>
+      <source>Enable</source>
+      <translation>有効にする</translation>
+    </message>
+    <message>
+      <source>Disable</source>
+      <translation>無効にする</translation>
+    </message>
+    <message>
+      <source>Automatic</source>
+      <translation>自動</translation>
+    </message>
+    <message>
+      <source>None</source>
+      <translation>なし</translation>
+    </message>
+    <message>
+      <source>With this on, new tabs are opened just after the
+current, active one. Otherwise, they are added to
+be the last ones.</source>
+      <translation>このオプションを有効にすると、
+新しいタブは現在アクティブなタブの直後に開く。
+無効の場合は、すべてのタブの最後に追加される。</translation>
+    </message>
+    <message>
+      <source>&amp;Style</source>
+      <translation>スタイル(&amp;S)</translation>
+    </message>
+    <message>
+      <source>Appearance</source>
+      <translation>外観</translation>
+    </message>
+    <message>
+      <source>Enable Interface Font</source>
+      <translation>インターフェースフォントを有効にする</translation>
+    </message>
+    <message>
+      <source>Font</source>
+      <translation>フォント</translation>
+    </message>
+    <message>
+      <source>Font Size</source>
+      <translation>フォントサイズ</translation>
+    </message>
+    <message>
+      <source>Interface language</source>
+      <translation>インターフェース言語</translation>
+    </message>
+    <message>
+      <source>Article Display style</source>
+      <translation>記事表示のスタイル</translation>
+    </message>
+    <message>
+      <source>Add-on style</source>
+      <translation>アドオンのスタイル</translation>
+    </message>
+    <message>
+      <source>Interface Style</source>
+      <translation>インターフェイスのスタイル</translation>
+    </message>
+    <message>
+      <source>Turn the UI to dark.</source>
+      <translation>UIを暗くします。</translation>
+    </message>
+    <message>
+      <source>Dark Mode</source>
+      <translation>ダークモード</translation>
+    </message>
+    <message>
+      <source>Turn the article display style to dark.</source>
+      <translation>記事の表示スタイルを暗くします。</translation>
+    </message>
+    <message>
+      <source>Dark Reader Mode</source>
+      <translation>ダークリーダーモード</translation>
+    </message>
+    <message>
+      <source>Preview Font</source>
+      <translation>フォントをプレビュー</translation>
+    </message>
+    <message>
+      <source>MicroDict is a dictionary software.</source>
+      <translation>MicroDict は辞書ソフトウェアです。</translation>
+    </message>
+    <message>
+      <source>These fonts will be applied when the fonts specified by a dictionary are not found.</source>
+      <translation>これらのフォントは、辞書で指定されたフォントが見つからない場合に適用されます。</translation>
+    </message>
+    <message>
+      <source>Standard Font</source>
+      <translation>標準フォント</translation>
+    </message>
+    <message>
+      <source>Serif Font</source>
+      <translation>セリフフォント</translation>
+    </message>
+    <message>
+      <source>Sans-serif Font</source>
+      <translation>サンセリフフォント</translation>
+    </message>
+    <message>
+      <source>Monospace Font</source>
+      <translation>等幅フォント</translation>
+    </message>
+    <message>
+      <source>Chooses whether the clipboard monitoring will be turned on by default at the program&apos;s startup.</source>
+      <translation>プログラム&apos;の起動時にクリップボードのモニタリングがデフォルトでオンになるかどうかを選択する。</translation>
+    </message>
+    <message>
+      <source>Start with clipboard monitoring turned on</source>
+      <translation>クリップボード監視をオンにして開始します</translation>
+    </message>
+    <message>
+      <source>Send translated word to main window instead of to show it in popup window</source>
+      <translation>翻訳結果をポップアップウィンドウに表示せず、メインウィンドウに送信する</translation>
+    </message>
+    <message>
+      <source>Send translated word to main window</source>
+      <translation>翻訳された単語をメインウィンドウに送信</translation>
+    </message>
+    <message>
+      <source>Track clipboard changes when Scanning is enabled. Notice! You should always enable this unless you are on Linux.</source>
+      <translation>スキャン有効時はクリップボードの変更を検出する。※GNU/Linux以外の環境では、本オプションを常に有効にすることを推奨する。</translation>
+    </message>
+    <message>
+      <source>Track Clipboard change</source>
+      <translation>クリップボードの変更を追跡する</translation>
+    </message>
+    <message>
+      <source>Track Selection change</source>
+      <translation>選択内容の変更を追跡</translation>
+    </message>
+    <message>
+      <source>With this enabled, the popup would only show up if all chosen keys are
+in the pressed state when the word selection changes.</source>
+      <translation>このオプションを有効にすると、選択中の単語が変更されたときに、
+指定されたキーがすべて押されている場合にのみポップアップが表示される。</translation>
+    </message>
+    <message>
+      <source>Only track selection when all selected keys are kept pressed:</source>
+      <translation>指定したキーをすべて押している場合のみ、選択を追跡する：</translation>
+    </message>
+    <message>
+      <source>Alt key</source>
+      <translation>Alt キー</translation>
+    </message>
+    <message>
+      <source>Ctrl key</source>
+      <translation>Ctrl キー</translation>
+    </message>
+    <message>
+      <source>Shift key</source>
+      <translation>Shift キー</translation>
+    </message>
+    <message>
+      <source>Windows key or Meta key</source>
+      <translation>Windows キーまたは Meta キー</translation>
+    </message>
+    <message>
+      <source>Do not show popup when selection or clipboard in one of MicroDict&apos;s own windows changes</source>
+      <translation>MicroDict&apos;の 1 つの選択またはクリップボードでは、ポップアップを表示しない</translation>
+    </message>
+    <message>
+      <source>Ignore MicroDict&apos;s own selection and clipboard changes</source>
+      <translation>MicroDict自身の選択とクリップボードの変更を無視する</translation>
+    </message>
+    <message>
+      <source>Delay time</source>
+      <translation>遅延時間</translation>
+    </message>
+    <message>
+      <source> ms</source>
+      <translation> ミリ秒</translation>
+    </message>
+    <message>
+      <source>Hotkeys</source>
+      <translation>ホットキー</translation>
+    </message>
+    <message>
+      <source>Use the following hotkey to show or hide the main window:</source>
+      <translation>メイン ウィンドウを表示または非表示にするのに次のホットキーを使用します:</translation>
+    </message>
+    <message>
+      <source>Use the following hotkey to translate a word from clipboard:</source>
+      <translation>クリップボードからの単語を翻訳するのに次のホットキーを使用します:</translation>
+    </message>
+    <message>
+      <source>The hotkeys are global and work from any program and within any context as long as MicroDict is running in background.</source>
+      <translation>ホットキーはすべてのプログラムで有効で、MicroDictがバックグラウンドで起動している限り、どのコンテキストでも使用できる。</translation>
+    </message>
+    <message>
+      <source>&amp;Audio</source>
+      <translation>音声(&amp;A)</translation>
+    </message>
+    <message>
+      <source>Pronunciation</source>
+      <translation>発音</translation>
+    </message>
+    <message>
+      <source>Auto-pronounce words in main window</source>
+      <translation>メインウィンドウで単語を自動再生</translation>
+    </message>
+    <message>
+      <source>Auto-pronounce words in the popup</source>
+      <translation>ポップアップで単語を自動再生</translation>
+    </message>
+    <message>
+      <source>Playback</source>
+      <translation>再生</translation>
+    </message>
+    <message>
+      <source>Play audio files via built-in audio support</source>
+      <translation>内蔵オーディオ機能で音声ファイルを再生する</translation>
+    </message>
+    <message>
+      <source>Choose audio back end</source>
+      <translation>オーディオバックエンドを選択</translation>
+    </message>
+    <message>
+      <source>Enter audio player command line</source>
+      <translation>オーディオプレーヤーのコマンドラインを入力してください</translation>
+    </message>
+    <message>
+      <source>Full-text search</source>
+      <translation>全文検索</translation>
+    </message>
+    <message>
+      <source>Allow full-text search for:</source>
+      <translation>全文検索を許可:</translation>
+    </message>
+    <message>
+      <source>Don&apos;t search in dictionaries containing more than</source>
+      <translation>次の記事数を超える辞書を検索対象から除外：</translation>
+    </message>
+    <message>
+      <source>articles (0 - unlimited)</source>
+      <translation>記事 (0 - 無制限)</translation>
+    </message>
+    <message>
+      <source>Create fulltext index with parallel threads </source>
+      <translation>全文インデックス作成時のスレッド数：</translation>
+    </message>
+    <message>
+      <source>Ad&amp;vanced</source>
+      <translation>詳細(&amp;V)</translation>
+    </message>
+    <message>
+      <source>History</source>
+      <translation>履歴</translation>
+    </message>
+    <message>
+      <source>Turn this option on to store history of the translated words</source>
+      <translation>このオプションを有効にすると、検索した単語の履歴が保存される。</translation>
+    </message>
+    <message>
+      <source>Store &amp;history</source>
+      <translation>履歴を保存(&amp;H)</translation>
+    </message>
+    <message>
+      <source>Specify the maximum number of entries to keep in history.</source>
+      <translation>履歴に保存するエントリの最大数を指定します。</translation>
+    </message>
+    <message>
+      <source>Maximum history size:</source>
+      <translation>履歴の最大保存件数：</translation>
+    </message>
+    <message>
+      <source>Favorites</source>
+      <translation>お気に入り</translation>
+    </message>
+    <message>
+      <source>Favorites saving interval. If set to 0 Favorites will be saved only during exit.</source>
+      <translation>お気に入りの保存間隔（0の場合は終了時のみ保存）</translation>
+    </message>
+    <message>
+      <source>Save every</source>
+      <translation>保存間隔</translation>
+    </message>
+    <message>
+      <source>minutes</source>
+      <translation>分</translation>
+    </message>
+    <message>
+      <source>Turn this option on to confirm every operation of items deletion</source>
+      <translation>項目の削除操作ごとに確認を求めるには、このオプションを有効にしてください</translation>
+    </message>
+    <message>
+      <source>Confirmation for items deletion</source>
+      <translation>項目削除の確認</translation>
+    </message>
+    <message>
+      <source>Articles</source>
+      <translation>記事</translation>
+    </message>
+    <message>
+      <source>Ignore punctuation while searching</source>
+      <translation>検索中に句読点を無視</translation>
+    </message>
+    <message>
+      <source>Input phrases longer than this size will be ignored</source>
+      <translation>この文字数より長い入力は無視される</translation>
+    </message>
+    <message>
+      <source>symbols</source>
+      <translation>文字</translation>
+    </message>
+    <message>
+      <source>Select this option to automatic collapse big articles</source>
+      <translation>大きな記事を自動的に折りたたむには、このオプションを選択してください</translation>
+    </message>
+    <message>
+      <source>Collapse articles more than</source>
+      <translation>より多くの記事を閉じる</translation>
+    </message>
+    <message>
+      <source>Turn this option on to ignore unreasonably long input text
+from mouse-over, selection, clipboard or command line</source>
+      <translation>このオプションを有効にすると、ホバー、テキスト選択、クリップボード、コマンドラインからの極端に長い入力テキストが無視される。</translation>
+    </message>
+    <message>
+      <source>Ignore input phrases longer than</source>
+      <translation>この文字数を超える入力を無視する：</translation>
+    </message>
+    <message>
+      <source>Articles longer than this size will be collapsed</source>
+      <translation>このサイズより長い記事は折りたたまれます</translation>
+    </message>
+    <message>
+      <source>Turn this option on to always expand optional parts of articles</source>
+      <translation>このオプションを有効にすると、記事の折りたたみ可能な部分が常に展開される。</translation>
+    </message>
+    <message>
+      <source>Expand optional &amp;parts</source>
+      <translation>折り畳める部分を展開(&amp;P)</translation>
+    </message>
+    <message>
+      <source>Turn this option on to ignore diacritics while searching articles</source>
+      <translation>このオプションを有効にすると、記事検索時にダイアクリティカルマークが無視される。</translation>
+    </message>
+    <message>
+      <source>Ignore diacritics while searching</source>
+      <translation>検索時にダイアクリティカルマークを無視</translation>
+    </message>
+    <message>
+      <source>During successive searches,if one dictionary is collapsed by manual, it will remain collapsed in the next search</source>
+      <translation>連続検索時、手動で折りたたんだ辞書は次の検索でも折りたたまれたままになる。</translation>
+    </message>
+    <message>
+      <source>Session collapse</source>
+      <translation>セッションを閉じる</translation>
+    </message>
+    <message>
+      <source>Turn this option on to enable extra articles search via synonym lists
+from Stardict, Babylon and GLS dictionaries</source>
+      <translation>このオプションを有効にすると、Stardict、Babylon、GLS 辞書の同義語リストを使って追加の記事検索ができるようになる。</translation>
+    </message>
+    <message>
+      <source>Extra search via synonyms</source>
+      <translation>同義語による追加検索</translation>
+    </message>
+    <message>
+      <source>When using clipboard, strip everything after newline</source>
+      <translation>クリップボードを使用する場合は、改行以降をすべて削除します</translation>
+    </message>
+    <message>
+      <source>On a new search, focus the main or popup window even if it&apos;s visible</source>
+      <translation>新しい検索時、メインウィンドウまたはポップアップウィンドウが既に前面に表示されている場合でも、そのウィンドウにフォーカスを移す</translation>
+    </message>
+    <message>
+      <source>Miscellaneous</source>
+      <translation>その他</translation>
+    </message>
+    <message>
+      <source>Remove invalid index on exit</source>
+      <translation>終了時に無効なインデックスを削除する</translation>
+    </message>
+    <message>
+      <source>Save debug messages to microdict_log.txt in the config folder</source>
+      <translation>デバッグメッセージをmicrodict_log.txtとして設定フォルダに保存する</translation>
+    </message>
+    <message>
+      <source>S&amp;can</source>
+      <translation>スキャン(&amp;C)</translation>
+    </message>
+    <message>
+      <source>Hide tab bar when only one tab is open.</source>
+      <translation>タブが1つだけのときにタブバーを非表示にする。</translation>
+    </message>
+    <message>
+      <source>Use any external audio player to play audio files</source>
+      <translation>外部プレーヤーを使用して音声ファイルを再生する</translation>
+    </message>
+    <message>
+      <source>View detailed configuration guide</source>
+      <translation>詳細設定ガイドを表示</translation>
+    </message>
+    <message>
+      <source>The audio path will be passed as a command-line argument to the external player. </source>
+      <translation>音声ファイルのパスがコマンドライン引数として外部プレーヤーに渡される。</translation>
+    </message>
+    <message>
+      <source>Internal Audio Player:</source>
+      <translation>内蔵プレーヤー：</translation>
+    </message>
+    <message>
+      <source>External Audio Player:</source>
+      <translation>外部プレーヤー：</translation>
+    </message>
+    <message>
+      <source>Automatically switches based on system theme.</source>
+      <translation>システムテーマに応じて自動的に切り替わる。</translation>
+    </message>
+    <message>
+      <source>Customize Fonts</source>
+      <translation>フォントのカスタマイズ</translation>
+    </message>
+    <message>
+      <source>The Dock icon is always shown while the main window is open so that macOS can display the application name and menus. Enable this option to keep the Dock icon visible after the main window is hidden.</source>
+      <translation>メインウィンドウ表示中はDockアイコンが表示され、macOSがアプリ名とメニューを表示できる。このオプションを有効にすると、メインウィンドウを隠した後もDockアイコンを表示し続ける。</translation>
+    </message>
+    <message>
+      <source>Keep Dock icon visible in background</source>
+      <translation>バックグラウンドでDockアイコンを表示し続ける</translation>
+    </message>
+  </context>
+  <context>
+    <name>ProgramTypeEditor</name>
+    <message>
+      <source>Audio</source>
+      <translation>オーディオ</translation>
+    </message>
+    <message>
+      <source>Plain Text</source>
+      <translation>プレーンテキスト</translation>
+    </message>
+    <message>
+      <source>Html</source>
+      <translation>Html</translation>
+    </message>
+    <message>
+      <source>Prefix Match</source>
+      <translation>プレフィックス一致</translation>
+    </message>
+    <message>
+      <source>Unknown</source>
+      <translation>不明</translation>
+    </message>
+  </context>
+  <context>
+    <name>Programs::RunInstance</name>
+    <message>
+      <source>No program name was given.</source>
+      <translation>プログラム名が指定されていません。</translation>
+    </message>
+    <message>
+      <source>The program has crashed.</source>
+      <translation>プログラムがクラッシュしました。</translation>
+    </message>
+    <message>
+      <source>The program has returned exit code %1.</source>
+      <translation>プログラムは終了コード %1 を返しました。</translation>
+    </message>
+  </context>
+  <context>
+    <name>ProgramsModel</name>
+    <message>
+      <source>Enabled</source>
+      <translation>有効</translation>
+    </message>
+    <message>
+      <source>Type</source>
+      <translation>タイプ</translation>
+    </message>
+    <message>
+      <source>Name</source>
+      <translation>名前</translation>
+    </message>
+    <message>
+      <source>Command Line</source>
+      <translation>コマンドライン</translation>
+    </message>
+    <message>
+      <source>Icon</source>
+      <translation>アイコン</translation>
+    </message>
+  </context>
+  <context>
+    <name>QObject</name>
+    <message>
+      <source>Article loading error</source>
+      <translation>記事の読み込みエラー</translation>
+    </message>
+    <message>
+      <source>Article decoding error</source>
+      <translation>記事のデコードエラー</translation>
+    </message>
+    <message>
+      <source>Copyright: %1%2</source>
+      <translation>著作権: %1%2</translation>
+    </message>
+    <message>
+      <source>Version: %1%2</source>
+      <translation>バージョン: %1%2</translation>
+    </message>
+    <message>
+      <source>Author: %1%2</source>
+      <translation>作成者: %1%2</translation>
+    </message>
+    <message>
+      <source>E-mail: %1%2</source>
+      <translation>メール: %1%2</translation>
+    </message>
+    <message>
+      <source>Title: %1%2</source>
+      <translation>タイトル: %1%2</translation>
+    </message>
+    <message>
+      <source>Website: %1%2</source>
+      <translation>ウェブサイト: %1%2</translation>
+    </message>
+    <message>
+      <source>Date: %1%2</source>
+      <translation>日付: %1%2</translation>
+    </message>
+    <message>
+      <source>A dictionary lookup program.</source>
+      <translation>辞書検索プログラム。</translation>
+    </message>
+    <message>
+      <source>Word or sentence to query.</source>
+      <translation>検索する単語または文。</translation>
+    </message>
+    <message>
+      <source>Reset window state.</source>
+      <translation>ウィンドウの状態をリセットします。</translation>
+    </message>
+    <message>
+      <source>Change the group of main window.</source>
+      <translation>メイン ウィンドウのグループを変更します。</translation>
+    </message>
+    <message>
+      <source>Change the group of popup.</source>
+      <translation>ポップアップのグループを変更します</translation>
+    </message>
+    <message>
+      <source>Toggle popup.</source>
+      <translation>スキャンポップアップの切り替え。</translation>
+    </message>
+    <message>
+      <source>Print version and diagnosis info.</source>
+      <translation>バージョンと診断情報を印刷します。</translation>
+    </message>
+    <message>
+      <source>Save debug messages to microdict_log.txt in the config folder.</source>
+      <translation>デバッグメッセージをmicrodict_log.txtとして設定フォルダに保存する。</translation>
+    </message>
+    <message>
+      <source>Force the word to be translated in Popup.</source>
+      <translation>ポップアップで単語を翻訳するよう強制する。</translation>
+    </message>
+    <message>
+      <source>Force the word to be translated in the mainwindow.</source>
+      <translation>メインウィンドウで単語を翻訳するよう強制する。</translation>
+    </message>
+    <message>
+      <source>Complete Html (*.html *.htm)</source>
+      <translation>完全なHTML (*.html *.htm)</translation>
+    </message>
+    <message>
+      <source>Single Html (*.html *.htm)</source>
+      <translation>単一HTML (*.html *.htm)</translation>
+    </message>
+    <message>
+      <source>Save Article As</source>
+      <translation>記事を別名保存</translation>
+    </message>
+    <message>
+      <source>Save article complete</source>
+      <translation>記事の保存が完了した</translation>
+    </message>
+    <message>
+      <source>Error</source>
+      <translation>エラー</translation>
+    </message>
+    <message>
+      <source>Can&apos;t save article: %1</source>
+      <translation>記事を保存ない： %1</translation>
+    </message>
+    <message>
+      <source>Saving article... (%1/%2)</source>
+      <translation>記事を保存している… (%1/%2)</translation>
+    </message>
+  </context>
+  <context>
+    <name>QuickFilterLine</name>
+    <message>
+      <source>Dictionary search/filter (Ctrl+F)</source>
+      <translation>辞書検索/フィルタ (Ctrl+F)</translation>
+    </message>
+    <message>
+      <source>Clear Search</source>
+      <translation>検索をクリア</translation>
+    </message>
+  </context>
+  <context>
+    <name>ResourceToSaveHandler</name>
+    <message>
+      <source>ERROR: %1</source>
+      <translation>エラー: %1</translation>
+    </message>
+    <message>
+      <source>Resource saving error: </source>
+      <translation>リソース保存エラー: </translation>
+    </message>
+    <message>
+      <source>WARNING: %1</source>
+      <translation>警告: %1</translation>
+    </message>
+    <message>
+      <source>The referenced resource failed to download.</source>
+      <translation>参照されたリソースのダウンロードに失敗しました。</translation>
+    </message>
+  </context>
+  <context>
+    <name>Romaji</name>
+    <message>
+      <source>Hepburn Romaji for Hiragana</source>
+      <translation>ヘボン式ローマ字のひらがな</translation>
+    </message>
+    <message>
+      <source>Hepburn Romaji for Katakana</source>
+      <translation>片仮名をヘボン式ローマ字で検索</translation>
+    </message>
+  </context>
+  <context>
+    <name>RussianTranslit</name>
+    <message>
+      <source>Russian Transliteration</source>
+      <translation>ロシア語音訳</translation>
+    </message>
+  </context>
+  <context>
+    <name>ScanPopup</name>
+    <message>
+      <source>WARNING: %1</source>
+      <translation>警告: %1</translation>
+    </message>
+    <message>
+      <source>Definition</source>
+      <translation>定義</translation>
+    </message>
+    <message>
+      <source>Close current tab</source>
+      <translation>現在のタブを閉じる</translation>
+    </message>
+    <message>
+      <source>Close all tabs except current</source>
+      <translation>現在以外のすべてのタブを閉じる</translation>
+    </message>
+    <message>
+      <source>Close all tabs</source>
+      <translation>すべてのタブを閉じる</translation>
+    </message>
+  </context>
+  <context>
+    <name>ScanPopupToolBar</name>
+    <message>
+      <source>Back</source>
+      <translation>戻る</translation>
+    </message>
+    <message>
+      <source>Forward</source>
+      <translation>進む</translation>
+    </message>
+    <message>
+      <source>Pronounce Word (Alt+S)</source>
+      <translation>ワードを発音（Alt+S）</translation>
+    </message>
+    <message>
+      <source>Alt+S</source>
+      <translation>Alt+S</translation>
+    </message>
+    <message>
+      <source>Send word to main window (Alt+W)</source>
+      <translation>単語をメインウィンドウに送信 (Alt+W)</translation>
+    </message>
+    <message>
+      <source>Add word to Favorites (Ctrl+E)</source>
+      <translation>単語をお気に入りに追加 (Ctrl+E)</translation>
+    </message>
+    <message>
+      <source>Always stay on top of all other windows</source>
+      <translation>常に他のすべてのウィンドウの上にとどまります</translation>
+    </message>
+    <message>
+      <source>Use this to pin down the window so it would stay on screen,
+could be resized or managed in other ways.</source>
+      <translation>このオプションを有効にすると、ウィンドウを画面に固定し、
+サイズ変更やその他の管理が可能になる。</translation>
+    </message>
+    <message>
+      <source>Save Article</source>
+      <translation>記事の保存</translation>
+    </message>
+  </context>
+  <context>
+    <name>SearchPanel</name>
+    <message>
+      <source>&amp;Previous</source>
+      <translation>前(&amp;P)</translation>
+    </message>
+    <message>
+      <source>Ctrl+Shift+G</source>
+      <translation>Ctrl+Shift+G</translation>
+    </message>
+    <message>
+      <source>&amp;Next</source>
+      <translation>次へ(&amp;N)</translation>
+    </message>
+    <message>
+      <source>Ctrl+G</source>
+      <translation>Ctrl+G</translation>
+    </message>
+    <message>
+      <source>&amp;Case Sensitive</source>
+      <translation>大文字と小文字を区別(&amp;C)</translation>
+    </message>
+    <message>
+      <source>Find:</source>
+      <translation>検索:</translation>
+    </message>
+  </context>
+  <context>
+    <name>SoundDirsModel</name>
+    <message>
+      <source>Path</source>
+      <translation>パス</translation>
+    </message>
+    <message>
+      <source>Name</source>
+      <translation>名前</translation>
+    </message>
+    <message>
+      <source>Icon</source>
+      <translation>アイコン</translation>
+    </message>
+  </context>
+  <context>
+    <name>Sources</name>
+    <message>
+      <source>Files</source>
+      <translation>ファイル</translation>
+    </message>
+    <message>
+      <source>Paths to search for the dictionary files:</source>
+      <translation>辞書ファイルを検索するパス:</translation>
+    </message>
+    <message>
+      <source>&amp;Add...</source>
+      <translation>追加(&amp;A)...</translation>
+    </message>
+    <message>
+      <source>&amp;Remove</source>
+      <translation>削除(&amp;R)</translation>
+    </message>
+    <message>
+      <source>Re&amp;scan now</source>
+      <translation>今すぐ再スキャン(&amp;S)</translation>
+    </message>
+    <message>
+      <source>Sound Dirs</source>
+      <translation>サウンド ディレクトリ</translation>
+    </message>
+    <message>
+      <source>Make dictionaries from bunches of audiofiles by adding paths here:</source>
+      <translation>ここにパスを追加してオーディオ ファイルのディレクトリを作成します:</translation>
+    </message>
+    <message>
+      <source>Morphology</source>
+      <translation>形態素解析</translation>
+    </message>
+    <message>
+      <source>Path to a directory with Hunspell/Myspell dictionaries:</source>
+      <translation>Hunspell/Myspell 辞書のあるディレクトリへのパス:</translation>
+    </message>
+    <message>
+      <source>&amp;Change...</source>
+      <translation>変更(&amp;C)...</translation>
+    </message>
+    <message>
+      <source>Available morphology dictionaries:</source>
+      <translation>利用可能な形態素解析辞書：</translation>
+    </message>
+    <message>
+      <source>Each morphology dictionary appears as a
+separate auxiliary dictionary which
+provides stem words for searches and
+spelling suggestions for mistyped words.
+Add appropriate dictionaries to the bottoms
+of the appropriate groups to use them.</source>
+      <translation>各形態素解析辞書は、検索用の辞書形を提供し、
+スペルミスの修正候補を提示する補助辞書です。
+使用するには、該当するグループの末尾に追加してください。</translation>
+    </message>
+    <message>
+      <source>Programs</source>
+      <translation>プログラム</translation>
+    </message>
+    <message>
+      <source>Any external programs. A string %GDWORD% will be replaced with the query word. A string %GDSEARCH% will be replaced with the text in the search bar. If both of the parameters are not provided, the headword will be fed into standard input.</source>
+      <translation>外部プログラムでは、%GDWORD% は検索語に置き換えられ、%GDSEARCH% は検索バーのテキストに置き換えられる。両方の引数が指定されていない場合は、見出し語が標準入力に渡される。</translation>
+    </message>
+    <message>
+      <source>Transliteration</source>
+      <translation>翻字</translation>
+    </message>
+    <message>
+      <source>Greek transliteration</source>
+      <translation>ギリシャ語翻字</translation>
+    </message>
+    <message>
+      <source>Russian transliteration</source>
+      <translation>ロシア語翻字</translation>
+    </message>
+    <message>
+      <source>German transliteration</source>
+      <translation>ドイツ語翻字</translation>
+    </message>
+    <message>
+      <source>Belarusian transliteration</source>
+      <translation>ベラルーシ語翻字</translation>
+    </message>
+    <message>
+      <source>Enables to use the Latin alphabet to write the Japanese language</source>
+      <translation>日本語をラテン文字で書けるようにする</translation>
+    </message>
+    <message>
+      <source>Japanese Romaji</source>
+      <translation>日本語ローマ字</translation>
+    </message>
+    <message>
+      <source>Systems:</source>
+      <translation>システム:</translation>
+    </message>
+    <message>
+      <source>Hepburn</source>
+      <translation>ヘボン式</translation>
+    </message>
+    <message>
+      <source>Syllabaries:</source>
+      <translation>仮名:</translation>
+    </message>
+    <message>
+      <source>Hiragana Japanese syllabary</source>
+      <translation>ひらがな</translation>
+    </message>
+    <message>
+      <source>Hiragana</source>
+      <translation>ひらがな</translation>
+    </message>
+    <message>
+      <source>Katakana Japanese syllabary</source>
+      <translation>カタカナ</translation>
+    </message>
+    <message>
+      <source>Katakana</source>
+      <translation>カタカナ</translation>
+    </message>
+    <message>
+      <source>Custom transliteration</source>
+      <translation>カスタム翻字</translation>
+    </message>
+    <message>
+      <source>This only applied in search phrase, with each line represent a transliteration,semicolon seperated. For example, ae;æ,users can input ae to represent æ in the target word.</source>
+      <translation>これは検索フレーズにのみ適用され、各行はセミコロンで区切られた音訳を表します。たとえば、ae;æ,ユーザーは、ターゲット単語の æ を表すために ae を入力できます。</translation>
+    </message>
+    <message>
+      <source>ae;æ #this is an example</source>
+      <translation>ae;æ #これは一例です</translation>
+    </message>
+    <message>
+      <source>Choose a directory</source>
+      <translation>ディレクトリを選択します</translation>
+    </message>
+    <message>
+      <source>Confirm removal</source>
+      <translation>削除の確認</translation>
+    </message>
+    <message>
+      <source>The most widely used method of transcription of Japanese, based on English phonology</source>
+      <translation>英語の綴りに基づいた、最も広く使われている日本語のローマ字表記法</translation>
+    </message>
+    <message>
+      <source>Remove selected directories from the list?</source>
+      <translation>リストから選択したディレクトリを削除しますか？</translation>
+    </message>
+    <message>
+      <source>Remove %1 directories from the list?</source>
+      <translation>リストから%1個のディレクトリを削除しますか？</translation>
+    </message>
+    <message>
+      <source>Remove %1 programs from the list?</source>
+      <translation>リストから%1個のプログラムを削除しますか？</translation>
+    </message>
+  </context>
+  <context>
+    <name>TranslateBox</name>
+    <message>
+      <source>Type a word or phrase to search dictionaries</source>
+      <translation>辞書を検索する単語またはフレーズを入力します</translation>
+    </message>
+    <message>
+      <source>Drop-down</source>
+      <translation>ドロップダウン</translation>
+    </message>
+  </context>
+  <context>
+    <name>WordFinder</name>
+    <message>
+      <source>Failed to query some dictionaries.</source>
+      <translation>いくつかの辞書のクエリに失敗しました。</translation>
+    </message>
+  </context>
+</TS>
